@@ -20,7 +20,12 @@
   a{color:var(--red)}
   .kicker{display:inline-block;background:var(--red);color:#fff;font-weight:700;
     font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px}
-  .mast{border-top:3px solid var(--red);padding-top:14px;margin-bottom:6px}
+  .mast{border-top:3px solid var(--red);padding-top:14px;margin-bottom:6px;position:relative}
+  .vgrlogo{background-image:url(%%LOGO_DATAURI%%);background-repeat:no-repeat;
+    background-position:center;background-size:contain}
+  .mastlogo{position:absolute;top:16px;right:0;width:150px;height:46px}
+  .footlogo{display:inline-block;width:104px;height:30px}
+  @media(max-width:640px){ .mastlogo{width:104px;height:32px;top:12px} }
   h1.title{font-size:44px;line-height:1.02;letter-spacing:-.01em;margin:12px 0 6px}
   .deck{font-size:17px;color:#333;max-width:760px}
   .metaline{font-size:12.5px;color:var(--sub);margin-top:10px}
@@ -147,22 +152,12 @@
 
   <header class="mast">
     <span class="kicker">Very Good Retail · Figure</span>
+    <div class="vgrlogo mastlogo" role="img" aria-label="VGR"></div>
     <h1 class="title">%%TITLE%%</h1>
     <div class="deck">%%SUBTITLE%%</div>
     <div class="metaline" id="metaline"></div>
     <a class="embed-more" id="embed-more" target="_blank" rel="noopener">Open the full interactive dashboard&nbsp;&#8599;</a>
   </header>
-
-  <div class="method">
-    <p>
-      <span class="lead">Read it like the Big Mac index.</span> The Economist prices one identical
-      burger across countries to reveal what local economies do to a fixed product. This does the same with
-      one identical garment — Zara's <span id="mname"></span>. It is the very same item everywhere, so the
-      gap between the cheapest and the dearest market is not about the product. It is
-      <b>local operating cost</b> plus <b>global logistics, import duties and tariffs</b>, <b>VAT</b> and
-      <b>local margin</b> — the true cost of putting one t-shirt on a shelf, country by country.
-    </p>
-  </div>
 
   <div class="kpis" id="kpis"></div>
 
@@ -206,16 +201,16 @@
   <!-- PRODUCT -->
   <section class="panel" id="panel-product">
     <div class="phead"><h2>The constant</h2>
-      <div class="psub">One reference, one colour, tracked everywhere. Swappable in <code>config/settings.json</code>.</div>
+      <div class="psub">One reference, one colour, tracked everywhere.</div>
     </div>
     <div class="pbody"><div class="prod" id="prod"></div></div>
   </section>
 
   <footer>
     <div id="src"></div>
-    <div style="text-align:right">
-      <div class="vgr">VERY GOOD RETAIL</div>
-      <div>Zara Polyamide Index · generated %%GENERATED%%</div>
+    <div style="text-align:right;margin-left:auto">
+      <div class="vgrlogo footlogo" role="img" aria-label="VGR" style="margin-left:auto"></div>
+      <div style="margin-top:4px">Zara Polyamide Index · generated %%GENERATED%%</div>
     </div>
   </footer>
 </div>
@@ -245,15 +240,12 @@ if(EMBED){
 $('#metaline').innerHTML =
   `Reference <b>${M.reference}</b> · ${M.colour_name} · snapshot <b>${M.run_date}</b> · `+
   `spot rates ${M.fx_asof} · anchor: ${M.base_name} = ${fmt(M.base_value)}`;
-$('#mname').textContent = M.product_name.toLowerCase();
 $('#chartsub').textContent =
   `${M.n_countries} markets · market spot rates · red line = ${M.base_name} anchor, grey line = world average`;
 $('#src').innerHTML =
   `Sources: Zara storefront scrape (Parser Zara), run ${M.run_date}; market spot FX from ${M.fx_source}, ${M.fx_asof}.<br>`+
   `Prices are the list price / RRP (VAT-inclusive where local law includes it); any current discount is ignored, so the index tracks standing price. `+
-  `Differences reflect local operations, logistics, duties &amp; tariffs, VAT and margin.`+
-  (M.currency_corrections && M.currency_corrections.length ? `<br>Currency corrected this run: ${M.currency_corrections.join(', ')} (stale feed label).` : '')+
-  `<br>Click any market to open the item on that country's zara.com (localised search for reference ${M.zara_search_term}).`;
+  `Differences reflect local operations, logistics, duties &amp; tariffs, VAT and margin.`;
 
 /* ---------- KPIs ---------- */
 const kpis=[

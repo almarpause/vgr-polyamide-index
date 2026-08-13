@@ -12,12 +12,23 @@ as an email attachment.
 from __future__ import annotations
 
 import argparse
+import base64
 import json
 from pathlib import Path
 
 import common
 
 TEMPLATE = common.ROOT / "dashboard_template.html"
+LOGO = common.ROOT / "web" / "vgr-logo-black.png"
+
+
+def logo_data_uri() -> str:
+    """Inline the VGR wordmark as a base64 data URI so the page stays fully
+    self-contained (GitHub Pages / email attachment / double-click all work)."""
+    if not LOGO.exists():
+        return ""
+    b64 = base64.b64encode(LOGO.read_bytes()).decode("ascii")
+    return f"data:image/png;base64,{b64}"
 
 
 def build(data: dict) -> str:
@@ -34,6 +45,7 @@ def build(data: dict) -> str:
         "%%SYM%%": m["symbol"],
         "%%BASE%%": m["base_name"],
         "%%REF%%": m["ref_name"],
+        "%%LOGO_DATAURI%%": logo_data_uri(),
         "%%RUNDATE%%": m["run_date"],
         "%%FXASOF%%": m["fx_asof"],
         "%%GENERATED%%": m["generated_on"],
