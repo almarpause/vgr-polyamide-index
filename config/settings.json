@@ -1,0 +1,11 @@
+{
+  "reference": "3905/532/800",
+  "display_currency": "EUR",
+  "base_country": "es",
+  "ref_country": "us",
+  "currency_overrides": {"bg": "EUR"},
+  "recipients": ["pau.almar@verygoodretail.ai"],
+  "zara_db": "../parser/russia/zara/layer3_consolidator/database/master.sqlite",
+  "zara_email_ini": "../parser/russia/zara/config/email.ini",
+  "_notes": "reference = Zara style/colour to track. display_currency = the single currency every market is converted to (EUR). base_country = the benchmark / 0% line (Spain, Zara's home market, whose EUR price is the anchor). ref_country = a secondary comparison shown alongside (USA). zara_db + zara_email_ini are reused from the weekly Zara parser; paths are relative to this project root."
+}

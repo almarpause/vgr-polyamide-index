@@ -1,0 +1,65 @@
+name: Refresh Zara Polyamide Index
+
+# Rebuilds the Zara Polyamide Index in the cloud (no computer needed) and
+# publishes it to GitHub Pages. The per-country Zara prices come from the
+# committed web/snapshot_local.json (refreshed weekly from the PC that runs the
+# Zara parser); the FX is fetched LIVE here, so the index moves every day.
+#
+# Published files:
+#   https://<user>.github.io/<repo>/                      -> the dashboard (index.html)
+#   https://<user>.github.io/<repo>/polyamide_data.json   -> the data feed (CORS-open)
+
+on:
+  push:
+    branches: [main]             # republish whenever code or the snapshot changes
+  schedule:
+    - cron: "0 6 * * *"        # daily at 06:00 UTC (08:00 CET). Adjust as you like.
+  workflow_dispatch: {}          # run manually from the Actions tab
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Build the index (committed prices + live spot FX)
+        run: python build_index.py --from-snapshot
+
+      - name: Render the dashboard
+        run: python build_dashboard.py
+
+      - name: Assemble the published site
+        run: |
+          mkdir -p site
+          cp output/dashboard.html site/index.html
+          cp output/latest.json    site/polyamide_data.json
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zara Polyamide Index</title>
+<style>
+  :root{
+    --red:#E3120B;          /* Econ Red — structural accent only */
+    --ink:#121212; --sub:#5a5a5a; --hair:#d7d2c7;
+    --paper:#F4F1E9; --card:#FFFFFF; --plot:#ECE8DE;
+    --eu:#2E7EA6; --ap:#69A7BF; --mea:#C88A1E; --am:#B0432B;
+    --slate:#3D4A5A; --grey:#8E9BAA;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:Arial,Helvetica,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.45}
+  .wrap{max-width:1180px;margin:0 auto;padding:26px 22px 60px}
+  h1,h2,h3{font-family:Georgia,'Times New Roman',serif;font-weight:700;margin:0}
+  a{color:var(--red)}
+  .kicker{display:inline-block;background:var(--red);color:#fff;font-weight:700;
+    font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px}
+  .mast{border-top:3px solid var(--red);padding-top:14px;margin-bottom:6px}
+  h1.title{font-size:44px;line-height:1.02;letter-spacing:-.01em;margin:12px 0 6px}
+  .deck{font-size:17px;color:#333;max-width:760px}
+  .metaline{font-size:12.5px;color:var(--sub);margin-top:10px}
+  .metaline b{color:#333}
+
+  .method{display:flex;gap:18px;align-items:flex-start;margin:22px 0 8px;
+    background:var(--card);border:1px solid var(--hair);border-left:3px solid var(--red);
+    padding:14px 16px}
+  .method p{margin:0;font-size:13.5px;color:#333}
+  .method .lead{font-weight:700}
+
+  .kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin:20px 0 8px}
+  .kpi{background:var(--card);border:1px solid var(--hair);padding:12px 12px 10px}
+  .kpi .lab{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--sub)}
+  .kpi .val{font-family:Georgia,serif;font-size:26px;font-weight:700;margin-top:3px;line-height:1}
+  .kpi .val small{font-size:14px;color:var(--sub);font-weight:400}
+  .kpi .sub{font-size:11.5px;color:var(--sub);margin-top:3px}
+  .kpi.flag{color:var(--red)}
+
+  section.panel{background:var(--card);border:1px solid var(--hair);margin-top:26px}
+  .phead{padding:16px 18px 6px}
+  .phead h2{font-size:21px}
+  .phead .psub{font-size:13px;color:var(--sub);margin-top:3px}
+  .pbody{padding:8px 18px 18px}
+
+  .controls{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;
+    padding:6px 18px 12px;border-bottom:1px solid var(--hair)}
+  .controls .grp{display:flex;gap:6px;align-items:center}
+  .controls .cl{font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--sub);margin-right:2px}
+  button.chip{font:inherit;font-size:12px;border:1px solid var(--hair);background:#fff;
+    color:#333;padding:4px 10px;cursor:pointer;border-radius:2px}
+  button.chip:hover{border-color:var(--grey)}
+  button.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  button.chip.reg{padding-left:8px}
+  .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;vertical-align:-1px}
+
+  /* ranked bar chart */
+  #chart .row{display:grid;grid-template-columns:150px 1fr;align-items:center;
+    height:22px;cursor:pointer;text-decoration:none;color:inherit}
+  #chart .row .lab{font-size:12px;text-align:right;padding-right:9px;white-space:nowrap;
+    overflow:hidden;text-overflow:ellipsis}
+  #chart .row .lab .fl{margin-right:5px}
+  #chart .row .ext{color:var(--red);font-size:10px;margin-left:4px;opacity:0;transition:opacity .12s}
+  #chart .row:hover .ext{opacity:.85}
+  #chart .row:hover .lab{text-decoration:underline}
+  #chart .track{position:relative;height:100%}
+  #chart .bar{position:absolute;top:3px;height:16px;transition:width .5s ease, left .5s ease}
+  #chart .bar .v{position:absolute;font-size:11px;top:-1px;color:#222;white-space:nowrap}
+  #chart .row:hover .bar{filter:brightness(1.08)}
+  #chart .row.hl .lab{font-weight:700}
+  #chart .row.hl .bar{outline:2px solid var(--red);outline-offset:0}
+  .axis0{position:absolute;top:0;bottom:0;width:0;border-left:1.5px solid var(--slate)}
+  .refline{position:absolute;top:0;bottom:0;width:0;border-left:1.5px dotted var(--red);z-index:3}
+  .refline .rl{position:absolute;top:-16px;font-size:10px;color:var(--red);font-weight:700;white-space:nowrap;transform:translateX(-50%)}
+  .plotwrap{position:relative;background:var(--plot);padding:22px 14px 8px;margin-top:4px}
+  .zeroband{position:absolute;top:22px;bottom:8px;background:rgba(61,74,90,.06)}
+
+  /* tooltip */
+  #tip{position:fixed;z-index:50;background:#fff;border:1px solid var(--slate);
+    box-shadow:0 6px 20px rgba(0,0,0,.18);padding:8px 10px;font-size:12px;max-width:230px;
+    pointer-events:none;display:none}
+  #tip b{font-family:Georgia,serif}
+  #tip .g{color:var(--sub)}
+  #tip .pos{color:var(--am);font-weight:700}#tip .neg{color:var(--eu);font-weight:700}
+
+  /* infographic */
+  .info{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 26px}
+  .irow{display:grid;grid-template-columns:135px 1fr auto;align-items:center;gap:10px;
+    padding:7px 0;border-bottom:1px solid var(--hair)}
+  .irow .who{font-size:12.5px}.irow .who .fl{margin-right:5px}
+  .irow .who small{display:block;color:var(--sub);font-size:11px}
+  .tees{display:flex;flex-wrap:wrap;gap:2px;align-items:center}
+  .tees svg{width:15px;height:15px}
+  .irow .cnt{font-family:Georgia,serif;font-weight:700;font-size:17px;text-align:right;white-space:nowrap}
+
+  /* region table */
+  .regs{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .regcard{border:1px solid var(--hair);padding:11px 12px}
+  .regcard .rn{font-size:12px;font-weight:700}
+  .regcard .rv{font-family:Georgia,serif;font-size:22px;font-weight:700;margin-top:2px}
+  .regcard .rr{font-size:11px;color:var(--sub)}
+  .regbar{height:6px;margin-top:7px;background:#eee}
+  .regbar i{display:block;height:100%}
+
+  /* product card */
+  .prod{display:flex;gap:18px;align-items:center}
+  .prod img{width:120px;height:160px;object-fit:cover;background:#eee;border:1px solid var(--hair)}
+  .prod .pd dt{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--sub);margin-top:8px}
+  .prod .pd dd{margin:1px 0 0;font-size:14px}
+  .prod .pd{margin:0}
+
+  footer{margin-top:30px;padding-top:14px;border-top:2px solid var(--ink);
+    font-size:11.5px;color:var(--sub);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  footer .vgr{font-family:Georgia,serif;font-weight:700;color:var(--red);letter-spacing:.02em}
+  @media(max-width:900px){
+    .kpis{grid-template-columns:repeat(3,1fr)}
+    .info{grid-template-columns:1fr}.regs{grid-template-columns:repeat(2,1fr)}
+    h1.title{font-size:34px}
+    #chart .row{grid-template-columns:120px 1fr}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="mast">
+    <span class="kicker">Very Good Retail · Figure</span>
+    <h1 class="title">%%TITLE%%</h1>
+    <div class="deck">%%SUBTITLE%%</div>
+    <div class="metaline" id="metaline"></div>
+  </header>
+
+  <div class="method">
+    <p>
+      <span class="lead">Read it like the Big Mac index.</span> The Economist prices one identical
+      burger across countries to reveal what local economies do to a fixed product. This does the same with
+      one identical garment — Zara's <span id="mname"></span>. It is the very same item everywhere, so the
+      gap between the cheapest and the dearest market is not about the product. It is
+      <b>local operating cost</b> plus <b>global logistics, import duties and tariffs</b>, <b>VAT</b> and
+      <b>local margin</b> — the true cost of putting one t-shirt on a shelf, country by country.
+    </p>
+  </div>
+
+  <div class="kpis" id="kpis"></div>
+
+  <!-- MAIN RANKED CHART -->
+  <section class="panel">
+    <div class="phead">
+      <h2>The price of one t-shirt, worldwide</h2>
+      <div class="psub" id="chartsub"></div>
+    </div>
+    <div class="controls">
+      <div class="grp"><span class="cl">Sort</span>
+        <button class="chip on" data-sort="value">%%SYM%% price</button>
+        <button class="chip" data-sort="base">vs %%BASE%%</button>
+        <button class="chip" data-sort="ref">vs %%REF%%</button>
+      </div>
+      <div class="grp" id="regchips"><span class="cl">Region</span></div>
+    </div>
+    <div class="pbody">
+      <div class="plotwrap"><div id="chart"></div></div>
+    </div>
+  </section>
+
+  <!-- VALUATION + INFOGRAPHIC -->
+  <section class="panel">
+    <div class="phead">
+      <h2>How many t-shirts does %%SYM%%100 buy?</h2>
+      <div class="psub">The same note stretches more than three times further in the cheapest market than the dearest — the Big&nbsp;Mac "burgers for your money" view.</div>
+    </div>
+    <div class="pbody"><div class="info" id="info"></div></div>
+  </section>
+
+  <!-- REGIONS -->
+  <section class="panel">
+    <div class="phead">
+      <h2>Average by region</h2>
+      <div class="psub">Mean US$ price of the identical t-shirt across the markets in each region.</div>
+    </div>
+    <div class="pbody"><div class="regs" id="regs"></div></div>
+  </section>
+
+  <!-- PRODUCT -->
+  <section class="panel">
+    <div class="phead"><h2>The constant</h2>
+      <div class="psub">One reference, one colour, tracked everywhere. Swappable in <code>config/settings.json</code>.</div>
+    </div>
+    <div class="pbody"><div class="prod" id="prod"></div></div>
+  </section>
+
+  <footer>
+    <div id="src"></div>
+    <div style="text-align:right">
+      <div class="vgr">VERY GOOD RETAIL</div>
+      <div>Zara Polyamide Index · generated %%GENERATED%%</div>
+    </div>
+  </footer>
+</div>
+
+<div id="tip"></div>
+
+<script>
+const DATA = %%DATA%%;
+const M = DATA.meta, C = DATA.countries;
+const REGCOL = {"Europe":getVar('--eu'),"Asia-Pacific":getVar('--ap'),
+  "Middle East & Africa":getVar('--mea'),"Americas":getVar('--am')};
+function getVar(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim();}
+const SYM=M.symbol||'€';
+const $=s=>document.querySelector(s), fmt=x=>SYM+x.toFixed(2),
+      pct=x=>(x>0?'+':'')+x.toFixed(0)+'%';
+
+/* ---------- meta / product ---------- */
+$('#metaline').innerHTML =
+  `Reference <b>${M.reference}</b> · ${M.colour_name} · snapshot <b>${M.run_date}</b> · `+
+  `spot rates ${M.fx_asof} · anchor: ${M.base_name} = ${fmt(M.base_value)}`;
+$('#mname').textContent = M.product_name.toLowerCase();
+$('#chartsub').textContent =
+  `${M.n_countries} markets · market spot rates · red line = ${M.base_name} anchor, grey line = world average`;
+$('#src').innerHTML =
+  `Sources: Zara storefront scrape (Parser Zara), run ${M.run_date}; market spot FX from ${M.fx_source}, ${M.fx_asof}.<br>`+
+  `Prices are the list price / RRP (VAT-inclusive where local law includes it); any current discount is ignored, so the index tracks standing price. `+
+  `Differences reflect local operations, logistics, duties &amp; tariffs, VAT and margin.`+
+  (M.currency_corrections && M.currency_corrections.length ? `<br>Currency corrected this run: ${M.currency_corrections.join(', ')} (stale feed label).` : '')+
+  `<br>Click any market to open the item on that country's zara.com (localised search for reference ${M.zara_search_term}).`;
+
+/* ---------- KPIs ---------- */
+const kpis=[
+  ['World average',fmt(M.avg),'mean of '+M.n_countries+' markets'],
+  ['Median',fmt(M.median),'half above, half below'],
+  ['Cheapest',fmt(M.cheapest.value),flag(M.cheapest.cc)+' '+M.cheapest.name,'flag'],
+  ['Dearest',fmt(M.dearest.value),flag(M.dearest.cc)+' '+M.dearest.name,'flag'],
+  ['Spread',(M.max/M.min).toFixed(1)+'<small>×</small>','dearest ÷ cheapest'],
+  [M.base_name+' anchor',fmt(M.base_value),'the 0% benchmark'],
+];
+$('#kpis').innerHTML=kpis.map(k=>
+  `<div class="kpi ${k[3]||''}"><div class="lab">${k[0]}</div>`+
+  `<div class="val">${k[1]}</div><div class="sub">${k[2]}</div></div>`).join('');
+
+/* ---------- region chips ---------- */
+const REGIONS=[...new Set(C.map(c=>c.region))];
+let activeRegions=new Set(REGIONS), sortMode='value';
+const rc=$('#regchips');
+REGIONS.forEach(r=>{
+  const b=document.createElement('button');
+  b.className='chip reg on'; b.dataset.reg=r;
+  b.innerHTML=`<span class="dot" style="background:${REGCOL[r]}"></span>${r}`;
+  b.onclick=()=>{ if(activeRegions.has(r)&&activeRegions.size>0){activeRegions.delete(r);b.classList.remove('on');}
+    else{activeRegions.add(r);b.classList.add('on');}
+    if(activeRegions.size===0){REGIONS.forEach(x=>activeRegions.add(x));
+      document.querySelectorAll('#regchips .reg').forEach(x=>x.classList.add('on'));}
+    render(); };
+  rc.appendChild(b);
+});
+document.querySelectorAll('[data-sort]').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('[data-sort]').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on'); sortMode=b.dataset.sort; render();
+});
+
+/* ---------- main chart ---------- */
+const chart=$('#chart');
+function render(){
+  let rows=C.filter(c=>activeRegions.has(c.region));
+  const div = sortMode!=='value';
+  const key = sortMode==='base'?'vs_base_pct':sortMode==='ref'?'vs_ref_pct':'value';
+  rows=[...rows].sort((a,b)=> (b[key]??-1e9)-(a[key]??-1e9) );
+
+  chart.innerHTML='';
+  if(!rows.length){chart.innerHTML='<div style="padding:20px;color:#888">No markets selected.</div>';return;}
+
+  let html='';
+  if(!div){
+    const max=Math.max(...rows.map(r=>r.value));
+    const scale=x=>Math.max(1,(x/max)*100);
+    const basePos = M.base_value/max*100, avgPos=M.avg/max*100;
+    html+=`<div class="axis0" style="left:0"></div>`;
+    html+=refline(basePos, M.base_name+' '+fmt(M.base_value));
+    html+=`<div class="refline" style="left:${avgPos}%;border-color:var(--slate)"><span class="rl" style="color:var(--slate)">avg</span></div>`;
+    rows.forEach(r=>{ html+=barRow(r, 0, scale(r.value), REGCOL[r.region], fmt(r.value)); });
+  } else {
+    const anchor = sortMode==='base'?M.base_name:M.ref_name;
+    const vals=rows.map(r=>r[key]??0);
+    const lo=Math.min(0,...vals), hi=Math.max(0,...vals), span=(hi-lo)||1;
+    const zero=(0-lo)/span*100;
+    html+=`<div class="axis0" style="left:${zero}%"></div>`;
+    html+=`<div class="refline" style="left:${zero}%"><span class="rl">${anchor} = 0</span></div>`;
+    rows.forEach(r=>{ const v=r[key]??0;
+      const left=(Math.min(0,v)-lo)/span*100, w=Math.abs(v)/span*100;
+      const col = v>=0?getVar('--am'):getVar('--eu');
+      html+=barRow(r,left,w,col,pct(v),v>=0);
+    });
+  }
+  chart.innerHTML=html;
+  bindTips(rows);
+}
+function refline(pos,label){
+  return `<div class="refline" style="left:${pos}%"><span class="rl">${label}</span></div>`;}
+function barRow(r,left,w,col,val){
+  const hl = (r.cc===M.base_country||r.cc===M.ref_country)?'hl':'';
+  const href = r.zara_url ? `href="${r.zara_url}" target="_blank" rel="noopener"` : '';
+  return `<a class="row ${hl}" data-cc="${r.cc}" ${href} title="Open ${r.name} on zara.com">`+
+    `<span class="lab"><span class="fl">${r.flag}</span>${r.name}<span class="ext">&#8599;</span></span>`+
+    `<span class="track"><span class="bar" style="left:${left}%;width:${w}%;background:${col}">`+
+    `<span class="v" style="left:calc(100% + 6px)">${val}</span></span></span></a>`;
+}
+
+/* ---------- tooltip ---------- */
+const tip=$('#tip');
+function bindTips(rows){
+  const by=Object.fromEntries(rows.map(r=>[r.cc,r]));
+  chart.querySelectorAll('.row').forEach(el=>{
+    el.onmousemove=e=>{ const r=by[el.dataset.cc]; if(!r)return;
+      tip.style.display='block';
+      const vb=r.vs_base_pct, vh=r.vs_ref_pct;
+      tip.innerHTML=`<b>${r.flag} ${r.name}</b> · <span class="g">${r.region}</span><br>`+
+        `<b style="font-size:15px">${fmt(r.value)}</b> &nbsp;<span class="g">local ${r.price_local_label}</span><br>`+
+        `vs ${M.base_name} <span class="${vb>=0?'pos':'neg'}">${pct(vb)}</span> · `+
+        `vs ${M.ref_name} <span class="${vh>=0?'pos':'neg'}">${pct(vh)}</span>`+
+        (r.on_sale?'<br><span class="g">on promotion</span>':'');
+      let x=e.clientX+14,y=e.clientY+14;
+      if(x+240>innerWidth)x=e.clientX-240; if(y+90>innerHeight)y=e.clientY-90;
+      tip.style.left=x+'px'; tip.style.top=y+'px';
+    };
+    el.onmouseleave=()=>tip.style.display='none';
+  });
+}
+
+/* ---------- infographic: tees per 100 ---------- */
+const TEE='<svg viewBox="0 0 24 24" fill="%C"><path d="M8 2 3 6l2 3 2-1v12h10V8l2 1 2-3-5-4-2 2a3 3 0 0 1-4 0z"/></svg>';
+function teeSvg(col){return TEE.replace('%C',col);}
+(function(){
+  const picks=[M.cheapest.cc,'in',M.base_country,M.ref_country,'de','uk','jp',M.dearest.cc];
+  const seen=new Set(); const list=[];
+  picks.forEach(cc=>{const r=C.find(c=>c.cc===cc); if(r&&!seen.has(cc)){seen.add(cc);list.push(r);}});
+  $('#info').innerHTML=list.map(r=>{
+    const n=100/r.value; const whole=Math.floor(n);
+    const glyphs=Array.from({length:Math.min(whole,20)},()=>teeSvg(REGCOL[r.region])).join('');
+    return `<div class="irow"><div class="who"><span class="fl">${r.flag}</span>${r.name}`+
+      `<small>${fmt(r.value)} each · ${r.price_local_label}</small></div>`+
+      `<div class="tees">${glyphs}</div>`+
+      `<div class="cnt">${n.toFixed(1)}</div></div>`;
+  }).join('');
+})();
+
+/* ---------- regions ---------- */
+(function(){
+  const g={}; C.forEach(c=>{(g[c.region]=g[c.region]||[]).push(c.value);});
+  const rows=Object.entries(g).map(([r,v])=>({r,avg:v.reduce((a,b)=>a+b,0)/v.length,n:v.length}))
+    .sort((a,b)=>b.avg-a.avg);
+  const max=Math.max(...rows.map(r=>r.avg));
+  $('#regs').innerHTML=rows.map(x=>
+    `<div class="regcard"><div class="rn"><span class="dot" style="background:${REGCOL[x.r]}"></span>${x.r}</div>`+
+    `<div class="rv">${fmt(x.avg)}</div><div class="rr">${x.n} markets</div>`+
+    `<div class="regbar"><i style="width:${x.avg/max*100}%;background:${REGCOL[x.r]}"></i></div></div>`).join('');
+})();
+
+/* ---------- product ---------- */
+$('#prod').innerHTML=
+  `<img src="${M.image_url}" alt="${M.product_name}" onerror="this.style.display='none'">`+
+  `<dl class="pd">`+
+  `<dt>Product</dt><dd>${M.product_name}</dd>`+
+  `<dt>Reference / colour</dt><dd>${M.reference} · ${M.colour_name}</dd>`+
+  `<dt>Category</dt><dd>${M.gender} · ${M.family} · ${M.subfamily}</dd>`+
+  `<dt>Season · markets priced</dt><dd>${M.season||'—'} · ${M.n_countries}</dd>`+
+  `</dl>`;
+
+function flag(cc){const o={uk:'gb'}[cc]||cc;
+  return [...o.toUpperCase()].map(ch=>String.fromCodePoint(0x1F1E6+ch.charCodeAt(0)-65)).join('');}
+
+render();
+</script>
+</body>
+</html>

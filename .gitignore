@@ -1,0 +1,13 @@
+# generated runs, logs, caches
+output/
+logs/
+config/fx_cache.json
+__pycache__/
+*.pyc
+# never commit SMTP secrets (kept in Parser Zara's config/email.ini anyway)
+config/email.ini
+_check.js
+_run.js
+
+# local Claude Code config
+.claude/

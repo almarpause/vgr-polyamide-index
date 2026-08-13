@@ -1,0 +1,342 @@
+{
+  "reference": "3905/532/800",
+  "style": "3905/532",
+  "run_date": "2026-08-10",
+  "exported_on": "2026-08-13",
+  "product": {
+    "colour_name": "Black",
+    "gender": "woman",
+    "family": "T-SHIRT",
+    "subfamily": "C. BASIC T-SHIRT",
+    "season": "W2026",
+    "name": "FINE STRAP POLYAMIDE T-SHIRT",
+    "image_url": "https://static.zara.net/assets/public/341e/a035/ea8e428bb4c8/727e416bb9c6/03905992800-a1/03905992800-a1.jpg?ts=1772714645761&w=563"
+  },
+  "rows": [
+    {
+      "cc": "ba",
+      "currency": "BAM",
+      "rrp": 15.5
+    },
+    {
+      "cc": "bg",
+      "currency": "BGN",
+      "rrp": 7.95
+    },
+    {
+      "cc": "hr",
+      "currency": "EUR",
+      "rrp": 7.95
+    },
+    {
+      "cc": "cy",
+      "currency": "EUR",
+      "rrp": 9.95
+    },
+    {
+      "cc": "cz",
+      "currency": "CZK",
+      "rrp": 249.0
+    },
+    {
+      "cc": "dk",
+      "currency": "DKK",
+      "rrp": 79.0
+    },
+    {
+      "cc": "ee",
+      "currency": "EUR",
+      "rrp": 9.95
+    },
+    {
+      "cc": "fi",
+      "currency": "EUR",
+      "rrp": 8.95
+    },
+    {
+      "cc": "fr",
+      "currency": "EUR",
+      "rrp": 8.95
+    },
+    {
+      "cc": "de",
+      "currency": "EUR",
+      "rrp": 8.95
+    },
+    {
+      "cc": "gr",
+      "currency": "EUR",
+      "rrp": 7.95
+    },
+    {
+      "cc": "hu",
+      "currency": "HUF",
+      "rrp": 3595.0
+    },
+    {
+      "cc": "is",
+      "currency": "ISK",
+      "rrp": 1795.0
+    },
+    {
+      "cc": "ie",
+      "currency": "EUR",
+      "rrp": 8.95
+    },
+    {
+      "cc": "it",
+      "currency": "EUR",
+      "rrp": 8.95
+    },
+    {
+      "cc": "lv",
+      "currency": "EUR",
+      "rrp": 9.95
+    },
+    {
+      "cc": "lt",
+      "currency": "EUR",
+      "rrp": 9.95
+    },
+    {
+      "cc": "lu",
+      "currency": "EUR",
+      "rrp": 8.95
+    },
+    {
+      "cc": "mt",
+      "currency": "EUR",
+      "rrp": 9.95
+    },
+    {
+      "cc": "me",
+      "currency": "EUR",
+      "rrp": 7.95
+    },
+    {
+      "cc": "nl",
+      "currency": "EUR",
+      "rrp": 8.95
+    },
+    {
+      "cc": "mk",
+      "currency": "MKD",
+      "rrp": 490.0
+    },
+    {
+      "cc": "no",
+      "currency": "NOK",
+      "rrp": 129.0
+    },
+    {
+      "cc": "pl",
+      "currency": "PLN",
+      "rrp": 35.9
+    },
+    {
+      "cc": "pt",
+      "currency": "EUR",
+      "rrp": 7.95
+    },
+    {
+      "cc": "ro",
+      "currency": "RON",
+      "rrp": 39.9
+    },
+    {
+      "cc": "rs",
+      "currency": "RSD",
+      "rrp": 990.0
+    },
+    {
+      "cc": "sk",
+      "currency": "EUR",
+      "rrp": 7.95
+    },
+    {
+      "cc": "si",
+      "currency": "EUR",
+      "rrp": 7.95
+    },
+    {
+      "cc": "es",
+      "currency": "EUR",
+      "rrp": 7.95
+    },
+    {
+      "cc": "se",
+      "currency": "SEK",
+      "rrp": 119.0
+    },
+    {
+      "cc": "ch",
+      "currency": "CHF",
+      "rrp": 9.9
+    },
+    {
+      "cc": "tr",
+      "currency": "TRY",
+      "rrp": 520.0
+    },
+    {
+      "cc": "ua",
+      "currency": "UAH",
+      "rrp": 429.0
+    },
+    {
+      "cc": "uk",
+      "currency": "GBP",
+      "rrp": 9.99
+    },
+    {
+      "cc": "ca",
+      "currency": "CAD",
+      "rrp": 17.9
+    },
+    {
+      "cc": "us",
+      "currency": "USD",
+      "rrp": 14.9
+    },
+    {
+      "cc": "mx",
+      "currency": "MXN",
+      "rrp": 229.0
+    },
+    {
+      "cc": "co",
+      "currency": "COP",
+      "rrp": 59900.0
+    },
+    {
+      "cc": "ae",
+      "currency": "AED",
+      "rrp": 59.0
+    },
+    {
+      "cc": "sa",
+      "currency": "SAR",
+      "rrp": 59.0
+    },
+    {
+      "cc": "qa",
+      "currency": "QAR",
+      "rrp": 49.0
+    },
+    {
+      "cc": "kw",
+      "currency": "KWD",
+      "rrp": 4.5
+    },
+    {
+      "cc": "bh",
+      "currency": "BHD",
+      "rrp": 5.5
+    },
+    {
+      "cc": "om",
+      "currency": "OMR",
+      "rrp": 5.9
+    },
+    {
+      "cc": "jo",
+      "currency": "JOD",
+      "rrp": 10.5
+    },
+    {
+      "cc": "lb",
+      "currency": "LBP",
+      "rrp": 1300000.0
+    },
+    {
+      "cc": "eg",
+      "currency": "EGP",
+      "rrp": 650.0
+    },
+    {
+      "cc": "il",
+      "currency": "ILS",
+      "rrp": 49.9
+    },
+    {
+      "cc": "ma",
+      "currency": "MAD",
+      "rrp": 129.0
+    },
+    {
+      "cc": "tn",
+      "currency": "TND",
+      "rrp": 45.9
+    },
+    {
+      "cc": "cn",
+      "currency": "CNY",
+      "rrp": 89.0
+    },
+    {
+      "cc": "jp",
+      "currency": "JPY",
+      "rrp": 1790.0
+    },
+    {
+      "cc": "kr",
+      "currency": "KRW",
+      "rrp": 17900.0
+    },
+    {
+      "cc": "in",
+      "currency": "INR",
+      "rrp": 450.0
+    },
+    {
+      "cc": "sg",
+      "currency": "SGD",
+      "rrp": 19.9
+    },
+    {
+      "cc": "my",
+      "currency": "MYR",
+      "rrp": 55.9
+    },
+    {
+      "cc": "id",
+      "currency": "IDR",
+      "rrp": 199900.0
+    },
+    {
+      "cc": "ph",
+      "currency": "PHP",
+      "rrp": 695.0
+    },
+    {
+      "cc": "th",
+      "currency": "THB",
+      "rrp": 490.0
+    },
+    {
+      "cc": "vn",
+      "currency": "VND",
+      "rrp": 359000.0
+    },
+    {
+      "cc": "tw",
+      "currency": "TWD",
+      "rrp": 390.0
+    },
+    {
+      "cc": "hk",
+      "currency": "HKD",
+      "rrp": 99.0
+    },
+    {
+      "cc": "mo",
+      "currency": "MOP",
+      "rrp": 99.0
+    },
+    {
+      "cc": "kz",
+      "currency": "KZT",
+      "rrp": 5590.0
+    }
+  ]
+}
