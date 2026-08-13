@@ -50,8 +50,17 @@ web_update.bat
 ```
 
 It runs `export_snapshot.py` (reads the local parser DB) and pushes
-`web/snapshot_local.json`; the push triggers a rebuild. To automate it, point a
-weekly Windows Task at `web_update.bat` (e.g. Mondays 03:00, after the scrape).
+`web/snapshot_local.json`; the push triggers a rebuild. It is idempotent — it only
+commits/pushes when the prices actually changed, so running it often is safe.
+
+**Already automated:** a per-user Windows task **`PolyamideWebUpdate`** runs
+`web_update.bat` **daily at 09:00**. It no-ops on days with no new scrape, and pushes
+the day the weekly Zara scrape lands — so new prices reach the site within a day, hands-free.
+```powershell
+schtasks /Query /TN PolyamideWebUpdate /V /FO LIST     # inspect
+schtasks /Run   /TN PolyamideWebUpdate                 # run now
+schtasks /Delete /TN PolyamideWebUpdate /F             # remove
+```
 
 ---
 
@@ -63,15 +72,17 @@ published version; nothing else to maintain:
 
 ```html
 <iframe
-  src="https://almarpause.github.io/vgr-polyamide-index/"
+  src="https://almarpause.github.io/vgr-polyamide-index/?embed=1"
   title="Zara Polyamide Index"
-  style="width:100%;height:3300px;border:0;border-radius:16px;"
+  style="width:100%;height:2020px;border:0;border-radius:16px;"
   loading="lazy">
 </iframe>
 ```
 
-(The dashboard is tall — 65 ranked markets plus the panels. ~3300px shows it all
-without an inner scrollbar; tune the height to taste.)
+`?embed=1` serves a **compact** layout (condensed header, KPIs, the 65-market ranked
+chart, region averages, and a link out to the full dashboard) — ~2020px, a tighter
+in-page fit. Drop `?embed=1` for the full standalone dashboard (~3300px). This is the
+exact embed used on the VGR site's Intelligence → Zara Polyamide Index page.
 
 ### Option B — native VGR styling: read the JSON and render it yourself
 Reads the live feed and renders in your own fonts/colours. Paste this component
