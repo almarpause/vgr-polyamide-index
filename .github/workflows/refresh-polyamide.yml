@@ -46,9 +46,11 @@ jobs:
 
       - name: Assemble the published site
         run: |
-          mkdir -p site
+          mkdir -p site site/posts
           cp output/dashboard.html site/index.html
           cp output/latest.json    site/polyamide_data.json
+          # monthly analysis posts (committed by the monthly run) travel to Pages
+          if [ -d web/posts ]; then cp -r web/posts/. site/posts/; fi
 
       - uses: actions/upload-pages-artifact@v3
         with:
