@@ -563,7 +563,8 @@
     "th",
     "vn",
     "co",
-    "in"
+    "in",
+    "pa"
   ],
-  "_franchise_notes": "Franchise / local-partner markets (not Inditex-owned): margin is shared with the partner. Applied from Pau's regional guidance (Middle East, North Africa, SE Asia, Caribbean, Argentina) + Inditex disclosure (Middle East franchised; India via Trent/Tata; Venezuela franchised). Inditex publishes no clean per-country list, so VERIFY/trim — Singapore & Malaysia in particular may be company-owned. Argentina & Caribbean are franchised but not in this index's 65 markets."
+  "_franchise_notes": "Franchise / local-partner markets (not Inditex-owned): margin is shared with the partner. Applied from Pau's regional guidance (Middle East, North Africa, SE Asia, Caribbean, Argentina) + Inditex disclosure (Middle East franchised; India via Trent/Tata; Venezuela franchised). Inditex publishes no clean per-country list, so VERIFY/trim — Singapore & Malaysia in particular may be company-owned. Argentina & Caribbean are franchised but not in this index's 65 markets. Panama (pa) is franchise too but NOT currently priced — Parser Zara does not track it; add PANAMA https://www.zara.com/pa/en to the parser country list to include it."
 }
