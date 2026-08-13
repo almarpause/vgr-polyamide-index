@@ -262,7 +262,8 @@ if(HAS_STACK){
   $('#clegend').innerHTML =
     `<span class="note">Thin strip in each bar (${M.symbol} price view) — how the shelf price builds up:</span>`+
     SEGS.map(([k,cls,lab])=>`<span class="lg"><span class="sw ${cls}"></span>${lab}</span>`).join('')+
-    `<span class="note">DC COGS €${(M.stack_params&&M.stack_params.dc_cogs_eur||0).toFixed(2)} fixed · duty is on the landed (CIF) value, not the shelf · Margin = operating contribution after local opex (gross margin = opex + margin) · <b style="color:var(--am)">&fnof;</b> = franchise market (margin shared with a local partner).</span>`;
+    `<span class="note">DC COGS €${(M.stack_params&&M.stack_params.dc_cogs_eur||0).toFixed(2)} fixed · duty is on the landed (CIF) value, not the shelf · Margin = operating contribution after local opex (gross margin = opex + margin) · <b style="color:var(--am)">&fnof;</b> = franchise market (margin shared with a local partner).</span>`+
+    `<span class="note" style="width:100%;font-weight:700;color:var(--am)">All cost components (COGS, freight, duties, VAT, opex, margin) are ESTIMATES based on industry standards — not actual Zara figures.</span>`;
 } else { const cl=$('#clegend'); if(cl) cl.style.display='none'; }
 
 /* ---------- meta / product ---------- */
@@ -274,7 +275,8 @@ $('#chartsub').textContent =
 $('#src').innerHTML =
   `Sources: Zara storefront scrape (Parser Zara), run ${M.run_date}; market spot FX from ${M.fx_source}, ${M.fx_asof}.<br>`+
   `Prices are the list price / RRP (VAT-inclusive where local law includes it); any current discount is ignored, so the index tracks standing price. `+
-  `Differences reflect local operations, logistics, duties &amp; tariffs, VAT and margin.`;
+  `Differences reflect local operations, logistics, duties &amp; tariffs, VAT and margin.<br>`+
+  `<b>Disclaimer:</b> the cost breakdown (COGS, freight, duties, VAT, local opex, margin) is <b>estimated from industry standards, not actual Zara/Inditex data</b>.`;
 
 /* ---------- KPIs ---------- */
 const kpis=[

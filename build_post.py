@@ -143,7 +143,7 @@ POST_TEMPLATE = """<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
   <tbody>%%TOPROWS%%</tbody></table>
   %%MOVERS%%
   <a class="back" href="../">‹ Back to the live index</a>
-  <footer>Zara Polyamide Index · Very Good Retail · post generated %%GENERATED%%. List price (RRP); duties/freight/VAT are modelled assumptions.</footer>
+  <footer>Zara Polyamide Index · Very Good Retail · post generated %%GENERATED%%.<br><b>Disclaimer:</b> the cost breakdown (COGS, freight, duties, VAT, local opex, margin) is <b>estimated from industry standards, not actual Zara/Inditex data</b>.</footer>
 </div></body></html>"""
 
 

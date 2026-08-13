@@ -133,7 +133,8 @@ def build(data: dict, d: dict) -> str:
     en.callout(doc, "Basis", [
         "List price (RRP), VAT-inclusive where local law includes it; current discounts ignored.",
         "Duties are origin-based (Turkey): EU entry duty-free via the customs union; MFN elsewhere.",
-        "Freight, duty and VAT are modelled assumptions in landed.json — figures to refine, not audited.",
+        "Disclaimer: the cost breakdown (COGS, freight, duties, VAT, local opex, margin) is estimated from "
+        "industry standards, not actual Zara/Inditex data.",
     ])
     en.page_break(doc)
 
