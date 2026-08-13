@@ -69,6 +69,7 @@
   #chart .row .lab{font-size:12px;text-align:right;padding-right:9px;white-space:nowrap;
     overflow:hidden;text-overflow:ellipsis}
   #chart .row .lab .fl{margin-right:5px}
+  #chart .row .fr{color:var(--am);font-weight:700;font-size:9px;margin-left:3px;vertical-align:super}
   #chart .row .ext{color:var(--red);font-size:10px;margin-left:4px;opacity:0;transition:opacity .12s}
   #chart .row:hover .ext{opacity:.85}
   #chart .row:hover .lab{text-decoration:underline}
@@ -261,7 +262,7 @@ if(HAS_STACK){
   $('#clegend').innerHTML =
     `<span class="note">Thin strip in each bar (${M.symbol} price view) — how the shelf price builds up:</span>`+
     SEGS.map(([k,cls,lab])=>`<span class="lg"><span class="sw ${cls}"></span>${lab}</span>`).join('')+
-    `<span class="note">DC COGS €${(M.stack_params&&M.stack_params.dc_cogs_eur||0).toFixed(2)} fixed · duty is on the landed (CIF) value, not the shelf · Margin = operating contribution after local opex (gross margin = opex + margin).</span>`;
+    `<span class="note">DC COGS €${(M.stack_params&&M.stack_params.dc_cogs_eur||0).toFixed(2)} fixed · duty is on the landed (CIF) value, not the shelf · Margin = operating contribution after local opex (gross margin = opex + margin) · <b style="color:var(--am)">&fnof;</b> = franchise market (margin shared with a local partner).</span>`;
 } else { const cl=$('#clegend'); if(cl) cl.style.display='none'; }
 
 /* ---------- meta / product ---------- */
@@ -359,7 +360,7 @@ function barRow(r,left,w,col,val){
   const below = (sortMode==='value' && r.stack && r.stack.below_cost) ? 'below' : '';
   const href = r.zara_url ? `href="${r.zara_url}" target="_blank" rel="noopener"` : '';
   return `<a class="row ${hl}" data-cc="${r.cc}" ${href} title="Open ${r.name} on zara.com">`+
-    `<span class="lab"><span class="fl">${r.flag}</span>${r.name}<span class="ext">&#8599;</span></span>`+
+    `<span class="lab"><span class="fl">${r.flag}</span>${r.name}${r.franchise?'<span class="fr" title="Franchise market — run by a local partner">&fnof;</span>':''}<span class="ext">&#8599;</span></span>`+
     `<span class="track"><span class="bar ${below}" style="left:${left}%;width:${w}%;background:${col}">`+
     `${costStrip(r)}<span class="v" style="left:calc(100% + 6px)">${val}</span></span></span></a>`;
 }
@@ -386,7 +387,7 @@ function bindTips(rows){
     el.onmousemove=e=>{ const r=by[el.dataset.cc]; if(!r)return;
       tip.style.display='block';
       const vb=r.vs_base_pct, vh=r.vs_ref_pct;
-      tip.innerHTML=`<b>${r.flag} ${r.name}</b> · <span class="g">${r.region}</span><br>`+
+      tip.innerHTML=`<b>${r.flag} ${r.name}</b> · <span class="g">${r.region}</span>${r.franchise?' · <b style="color:var(--am)">&fnof; franchise</b>':''}<br>`+
         `<b style="font-size:15px">${fmt(r.value)}</b> &nbsp;<span class="g">local ${r.price_local_label}</span><br>`+
         `vs ${M.base_name} <span class="${vb>=0?'pos':'neg'}">${pct(vb)}</span> · `+
         `vs ${M.ref_name} <span class="${vh>=0?'pos':'neg'}">${pct(vh)}</span>`+

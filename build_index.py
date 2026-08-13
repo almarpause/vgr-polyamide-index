@@ -46,8 +46,10 @@ def attach_cost_stack(countries: list[dict]) -> dict | None:
     # by local cost but COMPRESSED so it can't collapse: opex% = opex%_es · cost_index^e,
     # cost_index = salary/rent-weighted local level vs Spain=1.0, e in (0,1) (default 0.3).
     elasticity = float(cfg.get("opex_cost_elasticity", 0.3))
+    franchise = set(cfg.get("franchise_markets", []))
     per = cfg.get("countries", {})
     for c in countries:
+        c["franchise"] = c["cc"] in franchise
         p = per.get(c["cc"])
         if not p:
             c["stack"] = None; continue

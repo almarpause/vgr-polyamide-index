@@ -542,5 +542,31 @@
   "_opex_notes": "Local opex = salary + rent, each a fixed EUR/unit scaled by its own country index. Spain base: salary = salary_pct_es(0.135) x Spain net, rent = rent_pct_es(0.15) x Spain net (=28.5% of Spain net revenue). Per country: opex = salary_base x salary_idx + rent_base x rent_idx (indices vs Spain=1.0, from avg salary + avg rent). Tracks LOCAL operating cost, independent of the item's price.",
   "salary_pct_es": 0.135,
   "rent_pct_es": 0.15,
-  "opex_cost_elasticity": 0.3
+  "opex_cost_elasticity": 0.3,
+  "franchise_markets": [
+    "ma",
+    "tn",
+    "eg",
+    "sa",
+    "ae",
+    "qa",
+    "kw",
+    "bh",
+    "om",
+    "jo",
+    "lb",
+    "il",
+    "ph",
+    "id",
+    "th",
+    "vn",
+    "in",
+    "rs",
+    "ba",
+    "me",
+    "mk",
+    "ua",
+    "kz"
+  ],
+  "_franchise_notes": "Markets where Zara is run by a LOCAL FRANCHISE/partner (not owned): the shelf price includes an Inditex wholesale margin + the partner's margin, and the partner carries local opex — so the single 'margin' band overstates Zara's own take here. First-pass list; edit to match current Inditex structure."
 }
