@@ -1,74 +1,407 @@
 {
-  "_notes": "Cost-stack assumptions for the price-waterfall inside each bar. ALL EDITABLE DEFAULTS — tune freely. Per unit, in EUR unless noted. dc_cogs_eur = ex-DC landed cost (from the Spain IMU 3.1 => 7.95/3.1). other_pct = local handling/last-mile/ops as a share of NET (ex-VAT) price. insurance_pct = share of (cost+freight) added before duty. Per country: vat (% of net; US shelf is pre-tax so 0), mode (road|air, informational), freight (EUR/unit outbound Spain->market), duty (% MFN on the CIF value; 0 where an EU FTA/customs-union/EEA applies). Duty & freight are first-pass estimates — replace with real rate cards / HS-6109/6114 tariff lookups.",
+  "_notes": "Cost-stack assumptions for the price-waterfall inside each bar. ALL EDITABLE DEFAULTS — tune freely. Per unit, in EUR unless noted. dc_cogs_eur = ex-DC landed cost (from the Spain IMU 3.1 => 7.95/3.1). other_pct = local handling/last-mile/ops as a share of NET (ex-VAT) price. insurance_pct = share of (cost+freight) added before duty. Per country: vat (% of net; US shelf is pre-tax so 0), mode (road|air, informational), freight (EUR/unit outbound Spain->market), duty (% on the CIF value).",
+  "_origin_notes": "Product is MADE IN TURKEY (origin TR), HS 6109.90 (knit singlet/vest, man-made fibres). Duty is ORIGIN-based: EU entry = 0 via the EU-Turkey customs union (A.TR, free circulation); third-country preference follows TURKEY's own FTAs (EFTA, UK, Balkans, Morocco/Tunisia/Egypt, Israel, S.Korea, Singapore, Malaysia => 0), and pays MFN where only the EU has an FTA (Japan, Canada, Mexico, Vietnam, Colombia, South Africa). MMF (6109.90) MFN runs higher than cotton (6109.10) — e.g. US ~32% vs ~16.5%. Rates below are best-estimate defaults; verify against each country's 6109.90 line + Turkey-origin preference.",
+  "origin_country": "TR",
+  "hs_code": "6109.90",
   "dc_cogs_eur": 2.56,
   "other_pct": 0.08,
   "insurance_pct": 0.003,
   "countries": {
-    "es": {"vat": 21,   "mode": "road", "freight": 0.00, "duty": 0},
-    "pt": {"vat": 23,   "mode": "road", "freight": 0.03, "duty": 0},
-    "fr": {"vat": 20,   "mode": "road", "freight": 0.05, "duty": 0},
-    "de": {"vat": 19,   "mode": "road", "freight": 0.08, "duty": 0},
-    "it": {"vat": 22,   "mode": "road", "freight": 0.08, "duty": 0},
-    "nl": {"vat": 21,   "mode": "road", "freight": 0.08, "duty": 0},
-    "ie": {"vat": 23,   "mode": "road", "freight": 0.12, "duty": 0},
-    "lu": {"vat": 17,   "mode": "road", "freight": 0.08, "duty": 0},
-    "fi": {"vat": 25.5, "mode": "road", "freight": 0.15, "duty": 0},
-    "gr": {"vat": 24,   "mode": "road", "freight": 0.13, "duty": 0},
-    "cy": {"vat": 19,   "mode": "air",  "freight": 0.35, "duty": 0},
-    "mt": {"vat": 18,   "mode": "air",  "freight": 0.30, "duty": 0},
-    "ee": {"vat": 22,   "mode": "road", "freight": 0.12, "duty": 0},
-    "lv": {"vat": 21,   "mode": "road", "freight": 0.12, "duty": 0},
-    "lt": {"vat": 21,   "mode": "road", "freight": 0.11, "duty": 0},
-    "hr": {"vat": 25,   "mode": "road", "freight": 0.10, "duty": 0},
-    "si": {"vat": 22,   "mode": "road", "freight": 0.09, "duty": 0},
-    "sk": {"vat": 20,   "mode": "road", "freight": 0.09, "duty": 0},
-    "cz": {"vat": 21,   "mode": "road", "freight": 0.08, "duty": 0},
-    "hu": {"vat": 27,   "mode": "road", "freight": 0.10, "duty": 0},
-    "pl": {"vat": 23,   "mode": "road", "freight": 0.09, "duty": 0},
-    "ro": {"vat": 19,   "mode": "road", "freight": 0.12, "duty": 0},
-    "bg": {"vat": 20,   "mode": "road", "freight": 0.13, "duty": 0},
-    "dk": {"vat": 25,   "mode": "road", "freight": 0.10, "duty": 0},
-    "se": {"vat": 25,   "mode": "road", "freight": 0.12, "duty": 0},
-    "no": {"vat": 25,   "mode": "road", "freight": 0.13, "duty": 0},
-    "is": {"vat": 24,   "mode": "air",  "freight": 0.30, "duty": 0},
-    "ch": {"vat": 8.1,  "mode": "road", "freight": 0.09, "duty": 0},
-    "uk": {"vat": 20,   "mode": "road", "freight": 0.10, "duty": 0},
-    "ua": {"vat": 20,   "mode": "road", "freight": 0.14, "duty": 0},
-    "tr": {"vat": 20,   "mode": "road", "freight": 0.14, "duty": 0},
-    "rs": {"vat": 20,   "mode": "road", "freight": 0.11, "duty": 0},
-    "ba": {"vat": 17,   "mode": "road", "freight": 0.11, "duty": 0},
-    "me": {"vat": 21,   "mode": "road", "freight": 0.12, "duty": 0},
-    "mk": {"vat": 18,   "mode": "road", "freight": 0.11, "duty": 0},
-    "ma": {"vat": 20,   "mode": "road", "freight": 0.10, "duty": 0},
-    "tn": {"vat": 19,   "mode": "road", "freight": 0.11, "duty": 0},
-    "eg": {"vat": 14,   "mode": "road", "freight": 0.16, "duty": 0},
-    "il": {"vat": 17,   "mode": "air",  "freight": 0.45, "duty": 0},
-    "jo": {"vat": 16,   "mode": "air",  "freight": 0.48, "duty": 0},
-    "lb": {"vat": 11,   "mode": "air",  "freight": 0.48, "duty": 5},
-    "ae": {"vat": 5,    "mode": "air",  "freight": 0.50, "duty": 5},
-    "sa": {"vat": 15,   "mode": "air",  "freight": 0.52, "duty": 5},
-    "qa": {"vat": 0,    "mode": "air",  "freight": 0.52, "duty": 5},
-    "kw": {"vat": 0,    "mode": "air",  "freight": 0.53, "duty": 5},
-    "bh": {"vat": 10,   "mode": "air",  "freight": 0.52, "duty": 5},
-    "om": {"vat": 5,    "mode": "air",  "freight": 0.54, "duty": 5},
-    "za": {"vat": 15,   "mode": "air",  "freight": 0.60, "duty": 0},
-    "us": {"vat": 0,    "mode": "air",  "freight": 0.62, "duty": 16},
-    "ca": {"vat": 5,    "mode": "air",  "freight": 0.60, "duty": 0},
-    "mx": {"vat": 16,   "mode": "air",  "freight": 0.62, "duty": 0},
-    "co": {"vat": 19,   "mode": "air",  "freight": 0.70, "duty": 0},
-    "cn": {"vat": 13,   "mode": "air",  "freight": 0.68, "duty": 16},
-    "jp": {"vat": 10,   "mode": "air",  "freight": 0.70, "duty": 0},
-    "kr": {"vat": 10,   "mode": "air",  "freight": 0.68, "duty": 0},
-    "in": {"vat": 12,   "mode": "air",  "freight": 0.62, "duty": 12},
-    "sg": {"vat": 9,    "mode": "air",  "freight": 0.66, "duty": 0},
-    "my": {"vat": 10,   "mode": "air",  "freight": 0.66, "duty": 10},
-    "id": {"vat": 11,   "mode": "air",  "freight": 0.66, "duty": 15},
-    "ph": {"vat": 12,   "mode": "air",  "freight": 0.66, "duty": 15},
-    "th": {"vat": 7,    "mode": "air",  "freight": 0.66, "duty": 30},
-    "vn": {"vat": 10,   "mode": "air",  "freight": 0.64, "duty": 0},
-    "tw": {"vat": 5,    "mode": "air",  "freight": 0.70, "duty": 11},
-    "hk": {"vat": 0,    "mode": "air",  "freight": 0.72, "duty": 0},
-    "mo": {"vat": 0,    "mode": "air",  "freight": 0.72, "duty": 0},
-    "kz": {"vat": 12,   "mode": "air",  "freight": 0.55, "duty": 10}
+    "es": {
+      "vat": 21,
+      "mode": "road",
+      "freight": 0.0,
+      "duty": 0
+    },
+    "pt": {
+      "vat": 23,
+      "mode": "road",
+      "freight": 0.03,
+      "duty": 0
+    },
+    "fr": {
+      "vat": 20,
+      "mode": "road",
+      "freight": 0.05,
+      "duty": 0
+    },
+    "de": {
+      "vat": 19,
+      "mode": "road",
+      "freight": 0.08,
+      "duty": 0
+    },
+    "it": {
+      "vat": 22,
+      "mode": "road",
+      "freight": 0.08,
+      "duty": 0
+    },
+    "nl": {
+      "vat": 21,
+      "mode": "road",
+      "freight": 0.08,
+      "duty": 0
+    },
+    "ie": {
+      "vat": 23,
+      "mode": "road",
+      "freight": 0.12,
+      "duty": 0
+    },
+    "lu": {
+      "vat": 17,
+      "mode": "road",
+      "freight": 0.08,
+      "duty": 0
+    },
+    "fi": {
+      "vat": 25.5,
+      "mode": "road",
+      "freight": 0.15,
+      "duty": 0
+    },
+    "gr": {
+      "vat": 24,
+      "mode": "road",
+      "freight": 0.13,
+      "duty": 0
+    },
+    "cy": {
+      "vat": 19,
+      "mode": "air",
+      "freight": 0.35,
+      "duty": 0
+    },
+    "mt": {
+      "vat": 18,
+      "mode": "air",
+      "freight": 0.3,
+      "duty": 0
+    },
+    "ee": {
+      "vat": 22,
+      "mode": "road",
+      "freight": 0.12,
+      "duty": 0
+    },
+    "lv": {
+      "vat": 21,
+      "mode": "road",
+      "freight": 0.12,
+      "duty": 0
+    },
+    "lt": {
+      "vat": 21,
+      "mode": "road",
+      "freight": 0.11,
+      "duty": 0
+    },
+    "hr": {
+      "vat": 25,
+      "mode": "road",
+      "freight": 0.1,
+      "duty": 0
+    },
+    "si": {
+      "vat": 22,
+      "mode": "road",
+      "freight": 0.09,
+      "duty": 0
+    },
+    "sk": {
+      "vat": 20,
+      "mode": "road",
+      "freight": 0.09,
+      "duty": 0
+    },
+    "cz": {
+      "vat": 21,
+      "mode": "road",
+      "freight": 0.08,
+      "duty": 0
+    },
+    "hu": {
+      "vat": 27,
+      "mode": "road",
+      "freight": 0.1,
+      "duty": 0
+    },
+    "pl": {
+      "vat": 23,
+      "mode": "road",
+      "freight": 0.09,
+      "duty": 0
+    },
+    "ro": {
+      "vat": 19,
+      "mode": "road",
+      "freight": 0.12,
+      "duty": 0
+    },
+    "bg": {
+      "vat": 20,
+      "mode": "road",
+      "freight": 0.13,
+      "duty": 0
+    },
+    "dk": {
+      "vat": 25,
+      "mode": "road",
+      "freight": 0.1,
+      "duty": 0
+    },
+    "se": {
+      "vat": 25,
+      "mode": "road",
+      "freight": 0.12,
+      "duty": 0
+    },
+    "no": {
+      "vat": 25,
+      "mode": "road",
+      "freight": 0.13,
+      "duty": 0
+    },
+    "is": {
+      "vat": 24,
+      "mode": "air",
+      "freight": 0.3,
+      "duty": 0
+    },
+    "ch": {
+      "vat": 8.1,
+      "mode": "road",
+      "freight": 0.09,
+      "duty": 0
+    },
+    "uk": {
+      "vat": 20,
+      "mode": "road",
+      "freight": 0.1,
+      "duty": 0
+    },
+    "ua": {
+      "vat": 20,
+      "mode": "road",
+      "freight": 0.14,
+      "duty": 0
+    },
+    "tr": {
+      "vat": 20,
+      "mode": "road",
+      "freight": 0.14,
+      "duty": 0
+    },
+    "rs": {
+      "vat": 20,
+      "mode": "road",
+      "freight": 0.11,
+      "duty": 0
+    },
+    "ba": {
+      "vat": 17,
+      "mode": "road",
+      "freight": 0.11,
+      "duty": 0
+    },
+    "me": {
+      "vat": 21,
+      "mode": "road",
+      "freight": 0.12,
+      "duty": 0
+    },
+    "mk": {
+      "vat": 18,
+      "mode": "road",
+      "freight": 0.11,
+      "duty": 0
+    },
+    "ma": {
+      "vat": 20,
+      "mode": "road",
+      "freight": 0.1,
+      "duty": 0
+    },
+    "tn": {
+      "vat": 19,
+      "mode": "road",
+      "freight": 0.11,
+      "duty": 0
+    },
+    "eg": {
+      "vat": 14,
+      "mode": "road",
+      "freight": 0.16,
+      "duty": 0
+    },
+    "il": {
+      "vat": 17,
+      "mode": "air",
+      "freight": 0.45,
+      "duty": 0
+    },
+    "jo": {
+      "vat": 16,
+      "mode": "air",
+      "freight": 0.48,
+      "duty": 0
+    },
+    "lb": {
+      "vat": 11,
+      "mode": "air",
+      "freight": 0.48,
+      "duty": 5
+    },
+    "ae": {
+      "vat": 5,
+      "mode": "air",
+      "freight": 0.5,
+      "duty": 5
+    },
+    "sa": {
+      "vat": 15,
+      "mode": "air",
+      "freight": 0.52,
+      "duty": 5
+    },
+    "qa": {
+      "vat": 0,
+      "mode": "air",
+      "freight": 0.52,
+      "duty": 5
+    },
+    "kw": {
+      "vat": 0,
+      "mode": "air",
+      "freight": 0.53,
+      "duty": 5
+    },
+    "bh": {
+      "vat": 10,
+      "mode": "air",
+      "freight": 0.52,
+      "duty": 5
+    },
+    "om": {
+      "vat": 5,
+      "mode": "air",
+      "freight": 0.54,
+      "duty": 5
+    },
+    "za": {
+      "vat": 15,
+      "mode": "air",
+      "freight": 0.6,
+      "duty": 45
+    },
+    "us": {
+      "vat": 0,
+      "mode": "air",
+      "freight": 0.62,
+      "duty": 32
+    },
+    "ca": {
+      "vat": 5,
+      "mode": "air",
+      "freight": 0.6,
+      "duty": 18
+    },
+    "mx": {
+      "vat": 16,
+      "mode": "air",
+      "freight": 0.62,
+      "duty": 25
+    },
+    "co": {
+      "vat": 19,
+      "mode": "air",
+      "freight": 0.7,
+      "duty": 15
+    },
+    "cn": {
+      "vat": 13,
+      "mode": "air",
+      "freight": 0.68,
+      "duty": 16
+    },
+    "jp": {
+      "vat": 10,
+      "mode": "air",
+      "freight": 0.7,
+      "duty": 9
+    },
+    "kr": {
+      "vat": 10,
+      "mode": "air",
+      "freight": 0.68,
+      "duty": 0
+    },
+    "in": {
+      "vat": 12,
+      "mode": "air",
+      "freight": 0.62,
+      "duty": 12
+    },
+    "sg": {
+      "vat": 9,
+      "mode": "air",
+      "freight": 0.66,
+      "duty": 0
+    },
+    "my": {
+      "vat": 10,
+      "mode": "air",
+      "freight": 0.66,
+      "duty": 0
+    },
+    "id": {
+      "vat": 11,
+      "mode": "air",
+      "freight": 0.66,
+      "duty": 15
+    },
+    "ph": {
+      "vat": 12,
+      "mode": "air",
+      "freight": 0.66,
+      "duty": 15
+    },
+    "th": {
+      "vat": 7,
+      "mode": "air",
+      "freight": 0.66,
+      "duty": 30
+    },
+    "vn": {
+      "vat": 10,
+      "mode": "air",
+      "freight": 0.64,
+      "duty": 20
+    },
+    "tw": {
+      "vat": 5,
+      "mode": "air",
+      "freight": 0.7,
+      "duty": 11
+    },
+    "hk": {
+      "vat": 0,
+      "mode": "air",
+      "freight": 0.72,
+      "duty": 0
+    },
+    "mo": {
+      "vat": 0,
+      "mode": "air",
+      "freight": 0.72,
+      "duty": 0
+    },
+    "kz": {
+      "vat": 12,
+      "mode": "air",
+      "freight": 0.55,
+      "duty": 10
+    }
   }
 }
