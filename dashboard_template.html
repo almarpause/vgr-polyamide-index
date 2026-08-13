@@ -89,7 +89,7 @@
     overflow:hidden;border-top:1px solid rgba(255,255,255,.6)}
   .cseg{height:100%}
   .cs-dc{background:#2E3A46}.cs-fr{background:#4A7BAE}.cs-du{background:#B0432B}
-  .cs-ot{background:#C88A1E}.cs-mg{background:#3F8F6B}.cs-vat{background:#B9AE99}
+  .cs-ot{background:#C88A1E}.cs-op{background:#7E6BA8}.cs-mg{background:#3F8F6B}.cs-vat{background:#B9AE99}
   .bar.below{outline:1.5px solid #B0432B;outline-offset:0}
   .clegend{display:flex;flex-wrap:wrap;gap:5px 14px;align-items:center;padding:2px 4px 12px;font-size:11.5px;color:#444}
   .clegend .lg{display:inline-flex;align-items:center;gap:5px}
@@ -255,13 +255,13 @@ if(EMBED){
 
 /* ---------- cost-stack segments + legend ---------- */
 const SEGS=[["dc","cs-dc","DC COGS"],["freight","cs-fr","Freight"],["duty","cs-du","Duties & tariffs"],
-  ["other","cs-ot","Other"],["margin","cs-mg","Margin"],["vat","cs-vat","VAT"]];
+  ["other","cs-ot","Other"],["opex","cs-op","Local opex"],["margin","cs-mg","Margin"],["vat","cs-vat","VAT"]];
 const HAS_STACK = C.some(c=>c.stack);
 if(HAS_STACK){
   $('#clegend').innerHTML =
     `<span class="note">Thin strip in each bar (${M.symbol} price view) — how the shelf price builds up:</span>`+
     SEGS.map(([k,cls,lab])=>`<span class="lg"><span class="sw ${cls}"></span>${lab}</span>`).join('')+
-    `<span class="note">DC COGS €${(M.stack_params&&M.stack_params.dc_cogs_eur||0).toFixed(2)} · segments right of it = the cost of reaching that market vs Spain.</span>`;
+    `<span class="note">DC COGS €${(M.stack_params&&M.stack_params.dc_cogs_eur||0).toFixed(2)} fixed · duty is on the landed (CIF) value, not the shelf · Margin = operating contribution after local opex (gross margin = opex + margin).</span>`;
 } else { const cl=$('#clegend'); if(cl) cl.style.display='none'; }
 
 /* ---------- meta / product ---------- */

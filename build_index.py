@@ -38,28 +38,40 @@ def attach_cost_stack(countries: list[dict]) -> dict | None:
         return None
     cfg = json.loads(LANDED.read_text(encoding="utf-8"))
     dc = float(cfg["dc_cogs_eur"]); other_pct = float(cfg["other_pct"]); ins = float(cfg["insurance_pct"])
+    opex_pct = float(cfg.get("opex_pct", 0.0))
     per = cfg.get("countries", {})
     for c in countries:
         p = per.get(c["cc"])
         if not p:
             c["stack"] = None; continue
         vat, freight, duty = float(p["vat"]), float(p["freight"]), float(p["duty"])
+        spec = float(p.get("duty_specific_eur", 0) or 0)      # per-unit specific duty
+        rule = p.get("duty_rule", "add")                      # add | higher | advalorem
         value = c["value"]
         net = value / (1 + vat / 100)
         cif = dc + freight + ins * (dc + freight)
-        duty_eur = duty / 100 * cif
+        duty_adv = duty / 100 * cif
+        if spec > 0 and rule == "higher":
+            duty_eur = max(duty_adv, spec)
+        elif spec > 0 and rule == "add":
+            duty_eur = duty_adv + spec
+        else:
+            duty_eur = duty_adv
         other = other_pct * net
-        landed = dc + freight + duty_eur + other
-        margin = net - landed
+        opex = opex_pct * net
+        landed_cogs = dc + freight + duty_eur + other        # cost to get one unit onto the shelf
+        gross_margin = net - landed_cogs
+        margin = gross_margin - opex                          # operating contribution after local opex
         vat_eur = value - net
         c["stack"] = {
             "dc": round(dc, 3), "freight": round(freight, 3), "duty": round(duty_eur, 3),
-            "other": round(other, 3), "margin": round(margin, 3), "vat": round(vat_eur, 3),
-            "net": round(net, 3), "landed": round(landed, 3),
-            "duty_pct": duty, "vat_pct": vat, "mode": p.get("mode", ""),
-            "below_cost": margin < 0,
+            "other": round(other, 3), "opex": round(opex, 3), "margin": round(margin, 3),
+            "vat": round(vat_eur, 3), "net": round(net, 3), "landed": round(landed_cogs, 3),
+            "gross_margin": round(gross_margin, 3),
+            "duty_pct": duty, "duty_specific_eur": spec, "vat_pct": vat, "mode": p.get("mode", ""),
+            "below_cost": gross_margin < 0,                    # price under-covers landed COGS (pre-opex)
         }
-    return {"dc_cogs_eur": dc, "other_pct": other_pct, "insurance_pct": ins}
+    return {"dc_cogs_eur": dc, "other_pct": other_pct, "opex_pct": opex_pct, "insurance_pct": ins}
 
 
 def load_from_snapshot(run_date_override: str | None) -> tuple[str, dict, list[dict]]:

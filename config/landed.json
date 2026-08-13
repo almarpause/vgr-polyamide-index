@@ -239,13 +239,13 @@
       "vat": 17,
       "mode": "air",
       "freight": 0.45,
-      "duty": 0
+      "duty": 6
     },
     "jo": {
       "vat": 16,
       "mode": "air",
       "freight": 0.48,
-      "duty": 0
+      "duty": 20
     },
     "lb": {
       "vat": 11,
@@ -311,7 +311,7 @@
       "vat": 16,
       "mode": "air",
       "freight": 0.62,
-      "duty": 25
+      "duty": 35
     },
     "co": {
       "vat": 19,
@@ -341,7 +341,9 @@
       "vat": 12,
       "mode": "air",
       "freight": 0.62,
-      "duty": 20
+      "duty": 20,
+      "duty_specific_eur": 1.0,
+      "duty_rule": "higher"
     },
     "sg": {
       "vat": 9,
@@ -359,7 +361,7 @@
       "vat": 11,
       "mode": "air",
       "freight": 0.66,
-      "duty": 15
+      "duty": 25
     },
     "ph": {
       "vat": 12,
@@ -403,5 +405,7 @@
       "freight": 0.55,
       "duty": 10
     }
-  }
+  },
+  "opex_pct": 0.3,
+  "_audit": "Duty audited per HS 6109.90 + Turkish origin (2026-08). VERIFIED-0 (EU customs union / Turkey FTA): all EU, EFTA (ch,no,is), uk, Balkans (rs,ba,me,mk), Maghreb (ma,tn,eg), kr, sg, my. MFN (no Turkey deal): us32, ca18, mx35, co40(+specific if under-threshold), jp9, cn16, vn20, th30, id25, ph15, tw11, kz10, in20-or-EUR1.00/pc. GCC CET 5 (ae,sa,qa,kw,bh,om), lb5. FLAGGED-verify: ua (Turkey-Ukraine FTA in-force date), eg (Turkey-Egypt FTA status), il (trade halt), jo (FTA suspended), id (safeguards), co & mx (specific components), in (per-piece floor). Source against WITS/ITC MacMap before treating as audited."
 }
