@@ -83,6 +83,21 @@
   .plotwrap{position:relative;background:var(--plot);padding:22px 14px 8px;margin-top:4px}
   .zeroband{position:absolute;top:22px;bottom:8px;background:rgba(61,74,90,.06)}
 
+  /* cost-stack waterfall strip inside each bar */
+  .cstrip{position:absolute;left:0;right:0;bottom:0;height:5px;display:flex;
+    overflow:hidden;border-top:1px solid rgba(255,255,255,.6)}
+  .cseg{height:100%}
+  .cs-dc{background:#2E3A46}.cs-fr{background:#4A7BAE}.cs-du{background:#B0432B}
+  .cs-ot{background:#C88A1E}.cs-mg{background:#3F8F6B}.cs-vat{background:#B9AE99}
+  .bar.below{outline:1.5px solid #B0432B;outline-offset:0}
+  .clegend{display:flex;flex-wrap:wrap;gap:5px 14px;align-items:center;padding:2px 4px 12px;font-size:11.5px;color:#444}
+  .clegend .lg{display:inline-flex;align-items:center;gap:5px}
+  .clegend .sw{width:11px;height:11px;display:inline-block;border-radius:2px}
+  .clegend .note{color:var(--sub);font-size:11px;margin-left:2px}
+  #tip .brk{margin-top:6px;border-top:1px solid #eee;padding-top:5px;font-size:11.5px;line-height:1.55}
+  #tip .brk .sw{width:9px;height:9px;display:inline-block;border-radius:2px;margin-right:5px;vertical-align:-1px}
+  #tip .brk b{font-family:inherit}
+
   /* tooltip */
   #tip{position:fixed;z-index:50;background:#fff;border:1px solid var(--slate);
     box-shadow:0 6px 20px rgba(0,0,0,.18);padding:8px 10px;font-size:12px;max-width:230px;
@@ -176,6 +191,7 @@
       <div class="grp" id="regchips"><span class="cl">Region</span></div>
     </div>
     <div class="pbody">
+      <div class="clegend" id="clegend"></div>
       <div class="plotwrap"><div id="chart"></div></div>
     </div>
   </section>
@@ -235,6 +251,17 @@ if(EMBED){
   const more=$('#embed-more');
   if(more) more.href=location.origin+location.pathname;   // same page, no ?embed
 }
+
+/* ---------- cost-stack segments + legend ---------- */
+const SEGS=[["dc","cs-dc","DC COGS"],["freight","cs-fr","Freight"],["duty","cs-du","Duties & tariffs"],
+  ["other","cs-ot","Other"],["margin","cs-mg","Margin"],["vat","cs-vat","VAT"]];
+const HAS_STACK = C.some(c=>c.stack);
+if(HAS_STACK){
+  $('#clegend').innerHTML =
+    `<span class="note">Thin strip in each bar (${M.symbol} price view) — how the shelf price builds up:</span>`+
+    SEGS.map(([k,cls,lab])=>`<span class="lg"><span class="sw ${cls}"></span>${lab}</span>`).join('')+
+    `<span class="note">DC COGS €${(M.stack_params&&M.stack_params.dc_cogs_eur||0).toFixed(2)} · segments right of it = the cost of reaching that market vs Spain.</span>`;
+} else { const cl=$('#clegend'); if(cl) cl.style.display='none'; }
 
 /* ---------- meta / product ---------- */
 $('#metaline').innerHTML =
@@ -318,17 +345,40 @@ function render(){
 }
 function refline(pos,label){
   return `<div class="refline" style="left:${pos}%"><span class="rl">${label}</span></div>`;}
+function costStrip(r){
+  if(sortMode!=='value' || !r.stack) return '';
+  const parts=SEGS.map(([k,cls])=>[cls, Math.max(0, r.stack[k])]);
+  const S=parts.reduce((a,[,v])=>a+v,0)||1;
+  return `<span class="cstrip">`+
+    parts.map(([cls,v])=>`<span class="cseg ${cls}" style="width:${v/S*100}%"></span>`).join('')+
+    `</span>`;
+}
 function barRow(r,left,w,col,val){
   const hl = (r.cc===M.base_country||r.cc===M.ref_country)?'hl':'';
+  const below = (sortMode==='value' && r.stack && r.stack.below_cost) ? 'below' : '';
   const href = r.zara_url ? `href="${r.zara_url}" target="_blank" rel="noopener"` : '';
   return `<a class="row ${hl}" data-cc="${r.cc}" ${href} title="Open ${r.name} on zara.com">`+
     `<span class="lab"><span class="fl">${r.flag}</span>${r.name}<span class="ext">&#8599;</span></span>`+
-    `<span class="track"><span class="bar" style="left:${left}%;width:${w}%;background:${col}">`+
-    `<span class="v" style="left:calc(100% + 6px)">${val}</span></span></span></a>`;
+    `<span class="track"><span class="bar ${below}" style="left:${left}%;width:${w}%;background:${col}">`+
+    `${costStrip(r)}<span class="v" style="left:calc(100% + 6px)">${val}</span></span></span></a>`;
 }
 
 /* ---------- tooltip ---------- */
 const tip=$('#tip');
+function stackBreakdown(r){
+  if(!r.stack) return '';
+  const s=r.stack;
+  const pctOf=v=>((v/r.value*100)||0).toFixed(0)+'%';
+  const line=([k,cls,lab])=>{
+    const extra = k==='duty'&&s.duty_pct?` <span class="g">(${s.duty_pct}%)</span>`
+                : k==='vat'&&s.vat_pct?` <span class="g">(${s.vat_pct}%)</span>` : '';
+    const val = s[k]<0?`<span class="pos">${fmt(s[k])}</span>`:fmt(s[k]);
+    return `<span class="sw ${cls}"></span>${lab}${extra} <b>${val}</b> <span class="g">${pctOf(Math.max(0,s[k]))}</span>`;
+  };
+  return `<div class="brk">`+SEGS.map(line).join('<br>')+
+    (s.below_cost?`<br><span class="pos"><b>Below landed cost</b> — price under-covers COGS+duty.</span>`:'')+
+    `</div>`;
+}
 function bindTips(rows){
   const by=Object.fromEntries(rows.map(r=>[r.cc,r]));
   chart.querySelectorAll('.row').forEach(el=>{
@@ -339,9 +389,10 @@ function bindTips(rows){
         `<b style="font-size:15px">${fmt(r.value)}</b> &nbsp;<span class="g">local ${r.price_local_label}</span><br>`+
         `vs ${M.base_name} <span class="${vb>=0?'pos':'neg'}">${pct(vb)}</span> · `+
         `vs ${M.ref_name} <span class="${vh>=0?'pos':'neg'}">${pct(vh)}</span>`+
-        (r.on_sale?'<br><span class="g">on promotion</span>':'');
+        (r.on_sale?'<br><span class="g">on promotion</span>':'')+
+        stackBreakdown(r);
       let x=e.clientX+14,y=e.clientY+14;
-      if(x+240>innerWidth)x=e.clientX-240; if(y+90>innerHeight)y=e.clientY-90;
+      if(x+250>innerWidth)x=e.clientX-250; if(y+220>innerHeight)y=Math.max(8,e.clientY-220);
       tip.style.left=x+'px'; tip.style.top=y+'px';
     };
     el.onmouseleave=()=>tip.style.display='none';

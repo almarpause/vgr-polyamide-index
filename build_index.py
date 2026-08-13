@@ -25,6 +25,41 @@ import common
 
 FX_CACHE = common.CONFIG_DIR / "fx_cache.json"
 SNAPSHOT = common.ROOT / "web" / "snapshot_local.json"
+LANDED = common.CONFIG_DIR / "landed.json"
+
+
+def attach_cost_stack(countries: list[dict]) -> dict | None:
+    """Decompose each country's retail price into a cost waterfall:
+    DC COGS -> outbound freight -> duties & tariffs -> other -> margin -> VAT.
+    Assumptions live in config/landed.json (all editable). Adds c['stack'] with
+    each segment in EUR; returns the global params for the legend, or None if the
+    config is missing (the chart then just skips the inner strip)."""
+    if not LANDED.exists():
+        return None
+    cfg = json.loads(LANDED.read_text(encoding="utf-8"))
+    dc = float(cfg["dc_cogs_eur"]); other_pct = float(cfg["other_pct"]); ins = float(cfg["insurance_pct"])
+    per = cfg.get("countries", {})
+    for c in countries:
+        p = per.get(c["cc"])
+        if not p:
+            c["stack"] = None; continue
+        vat, freight, duty = float(p["vat"]), float(p["freight"]), float(p["duty"])
+        value = c["value"]
+        net = value / (1 + vat / 100)
+        cif = dc + freight + ins * (dc + freight)
+        duty_eur = duty / 100 * cif
+        other = other_pct * net
+        landed = dc + freight + duty_eur + other
+        margin = net - landed
+        vat_eur = value - net
+        c["stack"] = {
+            "dc": round(dc, 3), "freight": round(freight, 3), "duty": round(duty_eur, 3),
+            "other": round(other, 3), "margin": round(margin, 3), "vat": round(vat_eur, 3),
+            "net": round(net, 3), "landed": round(landed, 3),
+            "duty_pct": duty, "vat_pct": vat, "mode": p.get("mode", ""),
+            "below_cost": margin < 0,
+        }
+    return {"dc_cogs_eur": dc, "other_pct": other_pct, "insurance_pct": ins}
 
 
 def load_from_snapshot(run_date_override: str | None) -> tuple[str, dict, list[dict]]:
@@ -165,6 +200,8 @@ def main(argv=None) -> int:
         c["vs_base_pct"] = round((c["value"] / base_val - 1) * 100, 1) if base_val else None
         c["vs_ref_pct"] = round((c["value"] / ref_val - 1) * 100, 1) if ref_val else None
 
+    stack_params = attach_cost_stack(countries)
+
     vals = [c["value"] for c in countries]
     cheapest, dearest = countries[-1], countries[0]
     summary = {
@@ -195,6 +232,7 @@ def main(argv=None) -> int:
         "skipped_no_fx": skipped,
         "currency_corrections": corrected,
         "price_basis": "RRP (list price; current discounts ignored)",
+        "stack_params": stack_params,
     }
 
     data = {"meta": summary, "countries": countries}
