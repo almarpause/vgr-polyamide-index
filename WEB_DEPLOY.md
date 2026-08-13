@@ -65,10 +65,13 @@ published version; nothing else to maintain:
 <iframe
   src="https://almarpause.github.io/vgr-polyamide-index/"
   title="Zara Polyamide Index"
-  style="width:100%;height:2200px;border:0;border-radius:16px;"
+  style="width:100%;height:3300px;border:0;border-radius:16px;"
   loading="lazy">
 </iframe>
 ```
+
+(The dashboard is tall — 65 ranked markets plus the panels. ~3300px shows it all
+without an inner scrollbar; tune the height to taste.)
 
 ### Option B — native VGR styling: read the JSON and render it yourself
 Reads the live feed and renders in your own fonts/colours. Paste this component
