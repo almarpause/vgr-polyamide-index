@@ -38,7 +38,8 @@ def attach_cost_stack(countries: list[dict]) -> dict | None:
         return None
     cfg = json.loads(LANDED.read_text(encoding="utf-8"))
     dc = float(cfg["dc_cogs_eur"]); other_pct = float(cfg["other_pct"]); ins = float(cfg["insurance_pct"])
-    opex_pct = float(cfg.get("opex_pct", 0.0))
+    opex_pct = float(cfg.get("opex_pct", 0.0))          # legacy fallback (% of net)
+    opex_base = float(cfg.get("opex_base_eur", 0.0))    # Spain (factor 1.0) opex per unit
     per = cfg.get("countries", {})
     for c in countries:
         p = per.get(c["cc"])
@@ -58,7 +59,15 @@ def attach_cost_stack(countries: list[dict]) -> dict | None:
         else:
             duty_eur = duty_adv
         other = other_pct * net
-        opex = opex_pct * net
+        # Local opex tracks LOCAL cost (staff + rent), not the item's price:
+        # opex = base € x factor, factor = mean(salary_idx, rent_idx) vs Spain=1.0.
+        si_, ri_ = p.get("salary_idx"), p.get("rent_idx")
+        if opex_base and si_ is not None and ri_ is not None:
+            opex_factor = (float(si_) + float(ri_)) / 2
+            opex = opex_base * opex_factor
+        else:
+            opex_factor = None
+            opex = opex_pct * net
         landed_cogs = dc + freight + duty_eur + other        # cost to get one unit onto the shelf
         gross_margin = net - landed_cogs
         margin = gross_margin - opex                          # operating contribution after local opex
@@ -69,9 +78,10 @@ def attach_cost_stack(countries: list[dict]) -> dict | None:
             "vat": round(vat_eur, 3), "net": round(net, 3), "landed": round(landed_cogs, 3),
             "gross_margin": round(gross_margin, 3),
             "duty_pct": duty, "duty_specific_eur": spec, "vat_pct": vat, "mode": p.get("mode", ""),
+            "opex_factor": round(opex_factor, 2) if opex_factor is not None else None,
             "below_cost": gross_margin < 0,                    # price under-covers landed COGS (pre-opex)
         }
-    return {"dc_cogs_eur": dc, "other_pct": other_pct, "opex_pct": opex_pct, "insurance_pct": ins}
+    return {"dc_cogs_eur": dc, "other_pct": other_pct, "opex_base_eur": opex_base, "insurance_pct": ins}
 
 
 def load_from_snapshot(run_date_override: str | None) -> tuple[str, dict, list[dict]]:

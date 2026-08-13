@@ -11,331 +11,441 @@
       "vat": 21,
       "mode": "road",
       "freight": 0.05,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 1.0,
+      "rent_idx": 1.0
     },
     "pt": {
       "vat": 23,
       "mode": "road",
       "freight": 0.03,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 0.72,
+      "rent_idx": 0.75
     },
     "fr": {
       "vat": 20,
       "mode": "road",
       "freight": 0.05,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 1.55,
+      "rent_idx": 1.45
     },
     "de": {
       "vat": 19,
       "mode": "road",
       "freight": 0.08,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 1.65,
+      "rent_idx": 1.35
     },
     "it": {
       "vat": 22,
       "mode": "road",
       "freight": 0.08,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 1.2,
+      "rent_idx": 1.05
     },
     "nl": {
       "vat": 21,
       "mode": "road",
       "freight": 0.08,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 1.65,
+      "rent_idx": 1.6
     },
     "ie": {
       "vat": 23,
       "mode": "road",
       "freight": 0.12,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 1.75,
+      "rent_idx": 2.1
     },
     "lu": {
       "vat": 17,
       "mode": "road",
       "freight": 0.08,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 2.15,
+      "rent_idx": 1.85
     },
     "fi": {
       "vat": 25.5,
       "mode": "road",
       "freight": 0.15,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 1.6,
+      "rent_idx": 1.25
     },
     "gr": {
       "vat": 24,
       "mode": "road",
       "freight": 0.13,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 0.72,
+      "rent_idx": 0.7
     },
     "cy": {
       "vat": 19,
       "mode": "air",
       "freight": 0.35,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 0.9,
+      "rent_idx": 0.95
     },
     "mt": {
       "vat": 18,
       "mode": "air",
       "freight": 0.3,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 0.95,
+      "rent_idx": 1.05
     },
     "ee": {
       "vat": 22,
       "mode": "road",
       "freight": 0.12,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 0.85,
+      "rent_idx": 0.8
     },
     "lv": {
       "vat": 21,
       "mode": "road",
       "freight": 0.12,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 0.72,
+      "rent_idx": 0.65
     },
     "lt": {
       "vat": 21,
       "mode": "road",
       "freight": 0.11,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 0.75,
+      "rent_idx": 0.65
     },
     "hr": {
       "vat": 25,
       "mode": "road",
       "freight": 0.1,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 0.72,
+      "rent_idx": 0.75
     },
     "si": {
       "vat": 22,
       "mode": "road",
       "freight": 0.09,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 0.85,
+      "rent_idx": 0.8
     },
     "sk": {
       "vat": 20,
       "mode": "road",
       "freight": 0.09,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 0.72,
+      "rent_idx": 0.65
     },
     "cz": {
       "vat": 21,
       "mode": "road",
       "freight": 0.08,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 0.8,
+      "rent_idx": 0.8
     },
     "hu": {
       "vat": 27,
       "mode": "road",
       "freight": 0.1,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 0.62,
+      "rent_idx": 0.6
     },
     "pl": {
       "vat": 23,
       "mode": "road",
       "freight": 0.09,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 0.72,
+      "rent_idx": 0.68
     },
     "ro": {
       "vat": 19,
       "mode": "road",
       "freight": 0.12,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 0.6,
+      "rent_idx": 0.55
     },
     "bg": {
       "vat": 20,
       "mode": "road",
       "freight": 0.13,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 0.52,
+      "rent_idx": 0.5
     },
     "dk": {
       "vat": 25,
       "mode": "road",
       "freight": 0.1,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 2.1,
+      "rent_idx": 1.55
     },
     "se": {
       "vat": 25,
       "mode": "road",
       "freight": 0.12,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 1.65,
+      "rent_idx": 1.4
     },
     "no": {
       "vat": 25,
       "mode": "road",
       "freight": 0.13,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 2.15,
+      "rent_idx": 1.75
     },
     "is": {
       "vat": 24,
       "mode": "air",
       "freight": 0.3,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 2.0,
+      "rent_idx": 1.65
     },
     "ch": {
       "vat": 8.1,
       "mode": "road",
       "freight": 0.09,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 2.75,
+      "rent_idx": 2.3
     },
     "uk": {
       "vat": 20,
       "mode": "road",
       "freight": 0.1,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 1.65,
+      "rent_idx": 1.8
     },
     "ua": {
       "vat": 20,
       "mode": "road",
       "freight": 0.14,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 0.35,
+      "rent_idx": 0.4
     },
     "tr": {
       "vat": 20,
       "mode": "road",
       "freight": 0.14,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 0.48,
+      "rent_idx": 0.5
     },
     "rs": {
       "vat": 20,
       "mode": "road",
       "freight": 0.11,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 0.48,
+      "rent_idx": 0.5
     },
     "ba": {
       "vat": 17,
       "mode": "road",
       "freight": 0.11,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 0.42,
+      "rent_idx": 0.45
     },
     "me": {
       "vat": 21,
       "mode": "road",
       "freight": 0.12,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 0.5,
+      "rent_idx": 0.55
     },
     "mk": {
       "vat": 18,
       "mode": "road",
       "freight": 0.11,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 0.42,
+      "rent_idx": 0.45
     },
     "ma": {
       "vat": 20,
       "mode": "road",
       "freight": 0.1,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 0.4,
+      "rent_idx": 0.45
     },
     "tn": {
       "vat": 19,
       "mode": "road",
       "freight": 0.11,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 0.35,
+      "rent_idx": 0.35
     },
     "eg": {
       "vat": 14,
       "mode": "road",
       "freight": 0.16,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 0.32,
+      "rent_idx": 0.4
     },
     "il": {
       "vat": 17,
       "mode": "air",
       "freight": 0.45,
-      "duty": 6
+      "duty": 6,
+      "salary_idx": 1.7,
+      "rent_idx": 1.85
     },
     "jo": {
       "vat": 16,
       "mode": "air",
       "freight": 0.48,
-      "duty": 20
+      "duty": 20,
+      "salary_idx": 0.55,
+      "rent_idx": 0.65
     },
     "lb": {
       "vat": 11,
       "mode": "air",
       "freight": 0.48,
-      "duty": 5
+      "duty": 5,
+      "salary_idx": 0.45,
+      "rent_idx": 0.6
     },
     "ae": {
       "vat": 5,
       "mode": "air",
       "freight": 0.5,
-      "duty": 5
+      "duty": 5,
+      "salary_idx": 1.55,
+      "rent_idx": 1.7
     },
     "sa": {
       "vat": 15,
       "mode": "air",
       "freight": 0.52,
-      "duty": 5
+      "duty": 5,
+      "salary_idx": 1.2,
+      "rent_idx": 1.05
     },
     "qa": {
       "vat": 0,
       "mode": "air",
       "freight": 0.52,
-      "duty": 5
+      "duty": 5,
+      "salary_idx": 1.6,
+      "rent_idx": 1.75
     },
     "kw": {
       "vat": 0,
       "mode": "air",
       "freight": 0.53,
-      "duty": 5
+      "duty": 5,
+      "salary_idx": 1.45,
+      "rent_idx": 1.3
     },
     "bh": {
       "vat": 10,
       "mode": "air",
       "freight": 0.52,
-      "duty": 5
+      "duty": 5,
+      "salary_idx": 1.1,
+      "rent_idx": 0.95
     },
     "om": {
       "vat": 5,
       "mode": "air",
       "freight": 0.54,
-      "duty": 5
+      "duty": 5,
+      "salary_idx": 1.05,
+      "rent_idx": 0.9
     },
     "za": {
       "vat": 15,
       "mode": "air",
       "freight": 0.6,
-      "duty": 45
+      "duty": 45,
+      "salary_idx": 0.55,
+      "rent_idx": 0.6
     },
     "us": {
       "vat": 0,
       "mode": "air",
       "freight": 0.62,
-      "duty": 32
+      "duty": 32,
+      "salary_idx": 2.2,
+      "rent_idx": 2.0
     },
     "ca": {
       "vat": 5,
       "mode": "air",
       "freight": 0.6,
-      "duty": 18
+      "duty": 18,
+      "salary_idx": 1.9,
+      "rent_idx": 1.7
     },
     "mx": {
       "vat": 16,
       "mode": "air",
       "freight": 0.62,
-      "duty": 35
+      "duty": 35,
+      "salary_idx": 0.55,
+      "rent_idx": 0.6
     },
     "co": {
       "vat": 19,
       "mode": "air",
       "freight": 0.7,
-      "duty": 40
+      "duty": 40,
+      "salary_idx": 0.45,
+      "rent_idx": 0.45
     },
     "cn": {
       "vat": 13,
       "mode": "air",
       "freight": 0.68,
-      "duty": 16
+      "duty": 16,
+      "salary_idx": 0.8,
+      "rent_idx": 0.95
     },
     "jp": {
       "vat": 10,
       "mode": "air",
       "freight": 0.7,
-      "duty": 9
+      "duty": 9,
+      "salary_idx": 1.45,
+      "rent_idx": 1.25
     },
     "kr": {
       "vat": 10,
       "mode": "air",
       "freight": 0.68,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 1.45,
+      "rent_idx": 1.4
     },
     "in": {
       "vat": 12,
@@ -343,69 +453,92 @@
       "freight": 0.62,
       "duty": 20,
       "duty_specific_eur": 1.0,
-      "duty_rule": "higher"
+      "duty_rule": "higher",
+      "salary_idx": 0.35,
+      "rent_idx": 0.42
     },
     "sg": {
       "vat": 9,
       "mode": "air",
       "freight": 0.66,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 1.9,
+      "rent_idx": 2.3
     },
     "my": {
       "vat": 10,
       "mode": "air",
       "freight": 0.66,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 0.52,
+      "rent_idx": 0.5
     },
     "id": {
       "vat": 11,
       "mode": "air",
       "freight": 0.66,
-      "duty": 25
+      "duty": 25,
+      "salary_idx": 0.4,
+      "rent_idx": 0.42
     },
     "ph": {
       "vat": 12,
       "mode": "air",
       "freight": 0.66,
-      "duty": 15
+      "duty": 15,
+      "salary_idx": 0.4,
+      "rent_idx": 0.45
     },
     "th": {
       "vat": 7,
       "mode": "air",
       "freight": 0.66,
-      "duty": 30
+      "duty": 30,
+      "salary_idx": 0.5,
+      "rent_idx": 0.55
     },
     "vn": {
       "vat": 10,
       "mode": "air",
       "freight": 0.64,
-      "duty": 20
+      "duty": 20,
+      "salary_idx": 0.42,
+      "rent_idx": 0.45
     },
     "tw": {
       "vat": 5,
       "mode": "air",
       "freight": 0.7,
-      "duty": 11
+      "duty": 11,
+      "salary_idx": 1.05,
+      "rent_idx": 1.0
     },
     "hk": {
       "vat": 0,
       "mode": "air",
       "freight": 0.72,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 1.85,
+      "rent_idx": 2.6
     },
     "mo": {
       "vat": 0,
       "mode": "air",
       "freight": 0.72,
-      "duty": 0
+      "duty": 0,
+      "salary_idx": 1.55,
+      "rent_idx": 1.85
     },
     "kz": {
       "vat": 12,
       "mode": "air",
       "freight": 0.55,
-      "duty": 10
+      "duty": 10,
+      "salary_idx": 0.48,
+      "rent_idx": 0.5
     }
   },
-  "opex_pct": 0.3,
-  "_audit": "Duty audited per HS 6109.90 + Turkish origin (2026-08). VERIFIED-0 (EU customs union / Turkey FTA): all EU, EFTA (ch,no,is), uk, Balkans (rs,ba,me,mk), Maghreb (ma,tn,eg), kr, sg, my. MFN (no Turkey deal): us32, ca18, mx35, co40(+specific if under-threshold), jp9, cn16, vn20, th30, id25, ph15, tw11, kz10, in20-or-EUR1.00/pc. GCC CET 5 (ae,sa,qa,kw,bh,om), lb5. FLAGGED-verify: ua (Turkey-Ukraine FTA in-force date), eg (Turkey-Egypt FTA status), il (trade halt), jo (FTA suspended), id (safeguards), co & mx (specific components), in (per-piece floor). Source against WITS/ITC MacMap before treating as audited."
+  "_audit": "Duty audited per HS 6109.90 + Turkish origin (2026-08). VERIFIED-0 (EU customs union / Turkey FTA): all EU, EFTA (ch,no,is), uk, Balkans (rs,ba,me,mk), Maghreb (ma,tn,eg), kr, sg, my. MFN (no Turkey deal): us32, ca18, mx35, co40(+specific if under-threshold), jp9, cn16, vn20, th30, id25, ph15, tw11, kz10, in20-or-EUR1.00/pc. GCC CET 5 (ae,sa,qa,kw,bh,om), lb5. FLAGGED-verify: ua (Turkey-Ukraine FTA in-force date), eg (Turkey-Egypt FTA status), il (trade halt), jo (FTA suspended), id (safeguards), co & mx (specific components), in (per-piece floor). Source against WITS/ITC MacMap before treating as audited.",
+  "opex_base_eur": 1.97,
+  "_opex_notes": "Local opex = opex_base_eur x factor, where factor = (salary_idx + rent_idx)/2, both relative to Spain=1.0. Decouples opex from the item's price so it tracks local operating cost (staff+rent). Seeded from approximate average salary + average rent by country — tune per market."
 }
