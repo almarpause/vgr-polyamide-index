@@ -544,29 +544,8 @@
   "rent_pct_es": 0.15,
   "opex_cost_elasticity": 0.3,
   "franchise_markets": [
-    "ma",
-    "tn",
-    "eg",
-    "sa",
-    "ae",
-    "qa",
-    "kw",
-    "bh",
-    "om",
-    "jo",
-    "lb",
-    "il",
-    "ph",
-    "id",
-    "th",
-    "vn",
-    "in",
-    "rs",
-    "ba",
-    "me",
-    "mk",
-    "ua",
-    "kz"
+    "co",
+    "tn"
   ],
-  "_franchise_notes": "Markets where Zara is run by a LOCAL FRANCHISE/partner (not owned): the shelf price includes an Inditex wholesale margin + the partner's margin, and the partner carries local opex — so the single 'margin' band overstates Zara's own take here. First-pass list; edit to match current Inditex structure."
+  "_franchise_notes": "Markets where Zara is run by a local FRANCHISE/partner (not owned). This list must be VERIFIED against Inditex's own disclosure or Pau's knowledge — do NOT populate from guesswork. Currently only the confirmed markets are flagged; absence of a flag means UNVERIFIED, not necessarily owned."
 }
