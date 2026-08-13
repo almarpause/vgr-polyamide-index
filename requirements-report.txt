@@ -1,0 +1,8 @@
+# LOCAL-ONLY deps for the monthly executive report (monthly_report.py).
+# The cloud dashboard build (GitHub Action) uses stdlib only — see requirements.txt.
+# Install on the PC that runs the monthly task:  pip install -r requirements-report.txt
+python-docx>=1.1
+anthropic>=0.40        # optional: VGR-voice exec summary when ANTHROPIC_API_KEY is set
+# For the executive-summary prose, set ANTHROPIC_API_KEY in the scheduled task's
+# environment. Without it, an editable override file (history/summary_<date>.txt)
+# or a factual fallback is used instead.

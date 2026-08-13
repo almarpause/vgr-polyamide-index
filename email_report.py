@@ -136,9 +136,9 @@ def render(data: dict) -> tuple[str, str, str]:
   </table>
 
   <div style="margin:18px 0 6px;font:13px Arial;color:#333">
-    Each market name links straight to that country's Zara store for the item. The full interactive
-    dashboard — all {m['n_countries']} markets, sortable by price / vs&nbsp;{base} / vs&nbsp;{ref}, filterable by
-    region, every country clickable through to zara.com — is attached as <b>dashboard.html</b>.
+    Attached: the month's <b>executive report</b> (Word) — who wins, how it grew, and who moved in the top and
+    middle vs last month — plus the full interactive <b>dashboard.html</b> (all {m['n_countries']} markets, sortable
+    by price / vs&nbsp;{base} / vs&nbsp;{ref}, every country clickable through to zara.com).
   </div>
 
   <div style="border-top:2px solid #1a1a1a;margin-top:20px;padding-top:8px;font:11px Arial;color:#888">
@@ -167,7 +167,7 @@ def render(data: dict) -> tuple[str, str, str]:
 
 
 # ------------------------------------------------------------------- send
-def send(smtp: dict, subject: str, text: str, html: str, attach: Path, recipients: list[str]) -> None:
+def send(smtp: dict, subject: str, text: str, html: str, attachments: list[Path], recipients: list[str]) -> None:
     msg = MIMEMultipart("mixed")
     msg["Subject"] = subject
     msg["From"] = smtp["from"]
@@ -176,10 +176,12 @@ def send(smtp: dict, subject: str, text: str, html: str, attach: Path, recipient
     alt.attach(MIMEText(text, "plain", "utf-8"))
     alt.attach(MIMEText(html, "html", "utf-8"))
     msg.attach(alt)
-    if attach and attach.exists():
-        part = MIMEApplication(attach.read_bytes(), _subtype="html")
-        part.add_header("Content-Disposition", "attachment", filename=attach.name)
-        msg.attach(part)
+    _SUBTYPE = {".html": "html", ".docx": "vnd.openxmlformats-officedocument.wordprocessingml.document"}
+    for att in attachments:
+        if att and att.exists():
+            part = MIMEApplication(att.read_bytes(), _subtype=_SUBTYPE.get(att.suffix, "octet-stream"))
+            part.add_header("Content-Disposition", "attachment", filename=att.name)
+            msg.attach(part)
 
     host, port = smtp["host"], int(smtp["port"])
     ctx = ssl.create_default_context()
@@ -209,6 +211,8 @@ def main(argv=None) -> int:
     data = json.loads(src.read_text(encoding="utf-8"))
     run_date = data["meta"]["run_date"]
     dash = common.OUTPUT_DIR / run_date / "dashboard.html"
+    report = common.OUTPUT_DIR / run_date / f"polyamide_report_{run_date}.docx"
+    attachments = [p for p in (dash, report) if p.exists()]
 
     recipients = [x.strip() for x in (a.to.split(",") if a.to else cfg["recipients"]) if x and x.strip()]
     subject, text, html = render(data)
@@ -216,7 +220,7 @@ def main(argv=None) -> int:
     print(f"\n########## ZARA POLYAMIDE INDEX EMAIL  run_date={run_date} ##########")
     print(f"  to      : {', '.join(recipients)}")
     print(f"  subject : {subject}")
-    print(f"  attach  : {dash if dash.exists() else '(dashboard.html MISSING — run build_dashboard.py)'}")
+    print(f"  attach  : {', '.join(p.name for p in attachments) or '(none — build dashboard/report first)'}")
     if a.dry_run:
         print("  --dry-run (not sending) --\n")
         print(text)
@@ -229,7 +233,7 @@ def main(argv=None) -> int:
               f"Fill {cfg['zara_email_ini']} or set PI_SMTP_*/ZARA_SMTP_* env vars.", flush=True)
         return 2
     try:
-        send(smtp, subject, text, html, dash, recipients)
+        send(smtp, subject, text, html, attachments, recipients)
     except Exception as e:  # noqa: BLE001
         print(f"[email] NOOK — send failed: {type(e).__name__}: {e}", flush=True)
         return 2

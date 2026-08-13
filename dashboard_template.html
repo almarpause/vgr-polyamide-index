@@ -23,9 +23,10 @@
   .mast{border-top:3px solid var(--red);padding-top:14px;margin-bottom:6px;position:relative}
   .vgrlogo{background-image:url(%%LOGO_DATAURI%%);background-repeat:no-repeat;
     background-position:center;background-size:contain}
-  .mastlogo{position:absolute;top:18px;right:0;width:96px;height:30px}
+  .mastlogo{position:absolute;top:12px;right:0;font-family:Arial,Helvetica,sans-serif;
+    font-weight:800;font-size:30px;letter-spacing:-.02em;line-height:1;color:var(--ink)}
   .footlogo{display:inline-block;width:104px;height:30px}
-  @media(max-width:640px){ .mastlogo{width:76px;height:24px;top:16px} }
+  @media(max-width:640px){ .mastlogo{font-size:22px;top:14px} }
   h1.title{font-size:44px;line-height:1.02;letter-spacing:-.01em;margin:12px 0 6px}
   .deck{font-size:17px;color:#333;max-width:760px}
   .metaline{font-size:12.5px;color:var(--sub);margin-top:10px}
@@ -167,7 +168,7 @@
 
   <header class="mast">
     <span class="kicker">Very Good Retail · Indexes</span>
-    <div class="vgrlogo mastlogo" role="img" aria-label="VGR"></div>
+    <span class="mastlogo">VGR</span>
     <h1 class="title">%%TITLE%%</h1>
     <div class="deck">%%SUBTITLE%%</div>
     <div class="metaline" id="metaline"></div>

@@ -58,6 +58,21 @@ def main(argv=None) -> int:
     if r2 != 0:
         log("build_dashboard FAILED — aborting"); return 2
 
+    # Layer 2b — archive this month's shot + build the executive report.
+    # Non-fatal: a report failure must never block the email of the dashboard.
+    log("Layer 2b — historise + monthly report")
+    try:
+        import json as _json
+        import history
+        import monthly_report
+        src = (common.OUTPUT_DIR / a.run_date / "data.json") if a.run_date else (common.OUTPUT_DIR / "latest.json")
+        data = _json.loads(src.read_text(encoding="utf-8"))
+        history.record(data)
+        rr = monthly_report.main(["--run-date", a.run_date] if a.run_date else [])
+        log("monthly report OK" if rr == 0 else "monthly report NOOK (email will still send)")
+    except Exception as e:  # noqa: BLE001
+        log(f"historise/report step failed ({type(e).__name__}: {e}); continuing to email")
+
     if a.no_email:
         log("Layer 3 — email SKIPPED (--no-email)")
         log("DONE (build only)")
