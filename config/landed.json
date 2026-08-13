@@ -10,7 +10,7 @@
     "es": {
       "vat": 21,
       "mode": "road",
-      "freight": 0.0,
+      "freight": 0.05,
       "duty": 0
     },
     "pt": {
@@ -317,7 +317,7 @@
       "vat": 19,
       "mode": "air",
       "freight": 0.7,
-      "duty": 15
+      "duty": 40
     },
     "cn": {
       "vat": 13,
@@ -341,7 +341,7 @@
       "vat": 12,
       "mode": "air",
       "freight": 0.62,
-      "duty": 12
+      "duty": 20
     },
     "sg": {
       "vat": 9,
