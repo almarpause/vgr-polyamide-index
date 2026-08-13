@@ -39,8 +39,17 @@ def attach_cost_stack(countries: list[dict]) -> dict | None:
     cfg = json.loads(LANDED.read_text(encoding="utf-8"))
     dc = float(cfg["dc_cogs_eur"]); other_pct = float(cfg["other_pct"]); ins = float(cfg["insurance_pct"])
     opex_pct = float(cfg.get("opex_pct", 0.0))          # legacy fallback (% of net)
-    opex_base = float(cfg.get("opex_base_eur", 0.0))    # Spain (factor 1.0) opex per unit
+    salary_pct_es = float(cfg.get("salary_pct_es", 0.0))
+    rent_pct_es = float(cfg.get("rent_pct_es", 0.0))
     per = cfg.get("countries", {})
+    # Anchor the opex €/unit on Spain: salary + rent as shares of Spain's net revenue,
+    # then scale each component by that country's own salary / rent index.
+    es = next((c for c in countries if c["cc"] == "es"), None)
+    es_vat = float(per.get("es", {}).get("vat", 21))
+    spain_net = (es["value"] / (1 + es_vat / 100)) if es else 0.0
+    salary_base = salary_pct_es * spain_net
+    rent_base = rent_pct_es * spain_net
+    spain_opex = salary_base + rent_base
     for c in countries:
         p = per.get(c["cc"])
         if not p:
@@ -59,12 +68,12 @@ def attach_cost_stack(countries: list[dict]) -> dict | None:
         else:
             duty_eur = duty_adv
         other = other_pct * net
-        # Local opex tracks LOCAL cost (staff + rent), not the item's price:
-        # opex = base € x factor, factor = mean(salary_idx, rent_idx) vs Spain=1.0.
+        # Local opex = salary + rent (each a Spain-anchored €/unit scaled by its own
+        # country index), so it tracks LOCAL operating cost, not the item's price.
         si_, ri_ = p.get("salary_idx"), p.get("rent_idx")
-        if opex_base and si_ is not None and ri_ is not None:
-            opex_factor = (float(si_) + float(ri_)) / 2
-            opex = opex_base * opex_factor
+        if spain_opex and si_ is not None and ri_ is not None:
+            opex = salary_base * float(si_) + rent_base * float(ri_)
+            opex_factor = round(opex / spain_opex, 2)         # composite, Spain = 1.0
         else:
             opex_factor = None
             opex = opex_pct * net
@@ -81,7 +90,9 @@ def attach_cost_stack(countries: list[dict]) -> dict | None:
             "opex_factor": round(opex_factor, 2) if opex_factor is not None else None,
             "below_cost": gross_margin < 0,                    # price under-covers landed COGS (pre-opex)
         }
-    return {"dc_cogs_eur": dc, "other_pct": other_pct, "opex_base_eur": opex_base, "insurance_pct": ins}
+    return {"dc_cogs_eur": dc, "other_pct": other_pct, "insurance_pct": ins,
+            "salary_pct_es": salary_pct_es, "rent_pct_es": rent_pct_es,
+            "spain_opex_eur": round(spain_opex, 3)}
 
 
 def load_from_snapshot(run_date_override: str | None) -> tuple[str, dict, list[dict]]:
