@@ -41,15 +41,12 @@ def attach_cost_stack(countries: list[dict]) -> dict | None:
     opex_pct = float(cfg.get("opex_pct", 0.0))          # legacy fallback (% of net)
     salary_pct_es = float(cfg.get("salary_pct_es", 0.0))
     rent_pct_es = float(cfg.get("rent_pct_es", 0.0))
+    opex_pct_es = salary_pct_es + rent_pct_es           # Spain opex as % of net revenue (0.285)
+    # Opex is a % of NET REVENUE (a store always spends a real share on staff+rent), moved
+    # by local cost but COMPRESSED so it can't collapse: opex% = opex%_es · cost_index^e,
+    # cost_index = salary/rent-weighted local level vs Spain=1.0, e in (0,1) (default 0.3).
+    elasticity = float(cfg.get("opex_cost_elasticity", 0.3))
     per = cfg.get("countries", {})
-    # Anchor the opex €/unit on Spain: salary + rent as shares of Spain's net revenue,
-    # then scale each component by that country's own salary / rent index.
-    es = next((c for c in countries if c["cc"] == "es"), None)
-    es_vat = float(per.get("es", {}).get("vat", 21))
-    spain_net = (es["value"] / (1 + es_vat / 100)) if es else 0.0
-    salary_base = salary_pct_es * spain_net
-    rent_base = rent_pct_es * spain_net
-    spain_opex = salary_base + rent_base
     for c in countries:
         p = per.get(c["cc"])
         if not p:
@@ -71,11 +68,13 @@ def attach_cost_stack(countries: list[dict]) -> dict | None:
         # Local opex = salary + rent (each a Spain-anchored €/unit scaled by its own
         # country index), so it tracks LOCAL operating cost, not the item's price.
         si_, ri_ = p.get("salary_idx"), p.get("rent_idx")
-        if spain_opex and si_ is not None and ri_ is not None:
-            opex = salary_base * float(si_) + rent_base * float(ri_)
-            opex_factor = round(opex / spain_opex, 2)         # composite, Spain = 1.0
+        if opex_pct_es and si_ is not None and ri_ is not None:
+            cost_index = (salary_pct_es * float(si_) + rent_pct_es * float(ri_)) / opex_pct_es
+            opex_pct_c = opex_pct_es * (cost_index ** elasticity)   # compressed to a realistic band
+            opex = opex_pct_c * net
+            opex_factor = round(cost_index, 2)
         else:
-            opex_factor = None
+            opex_factor = opex_pct_c = None
             opex = opex_pct * net
         landed_cogs = dc + freight + duty_eur + other        # cost to get one unit onto the shelf
         gross_margin = net - landed_cogs
@@ -88,11 +87,12 @@ def attach_cost_stack(countries: list[dict]) -> dict | None:
             "gross_margin": round(gross_margin, 3),
             "duty_pct": duty, "duty_specific_eur": spec, "vat_pct": vat, "mode": p.get("mode", ""),
             "opex_factor": round(opex_factor, 2) if opex_factor is not None else None,
+            "opex_pct_net": round(opex_pct_c, 3) if opex_pct_c is not None else None,
             "below_cost": gross_margin < 0,                    # price under-covers landed COGS (pre-opex)
         }
     return {"dc_cogs_eur": dc, "other_pct": other_pct, "insurance_pct": ins,
             "salary_pct_es": salary_pct_es, "rent_pct_es": rent_pct_es,
-            "spain_opex_eur": round(spain_opex, 3)}
+            "opex_pct_es": opex_pct_es, "opex_cost_elasticity": elasticity}
 
 
 def load_from_snapshot(run_date_override: str | None) -> tuple[str, dict, list[dict]]:

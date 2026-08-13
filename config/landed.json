@@ -541,5 +541,6 @@
   "_audit": "Duty audited per HS 6109.90 + Turkish origin (2026-08). VERIFIED-0 (EU customs union / Turkey FTA): all EU, EFTA (ch,no,is), uk, Balkans (rs,ba,me,mk), Maghreb (ma,tn,eg), kr, sg, my. MFN (no Turkey deal): us32, ca18, mx35, co40(+specific if under-threshold), jp9, cn16, vn20, th30, id25, ph15, tw11, kz10, in20-or-EUR1.00/pc. GCC CET 5 (ae,sa,qa,kw,bh,om), lb5. FLAGGED-verify: ua (Turkey-Ukraine FTA in-force date), eg (Turkey-Egypt FTA status), il (trade halt), jo (FTA suspended), id (safeguards), co & mx (specific components), in (per-piece floor). Source against WITS/ITC MacMap before treating as audited.",
   "_opex_notes": "Local opex = salary + rent, each a fixed EUR/unit scaled by its own country index. Spain base: salary = salary_pct_es(0.135) x Spain net, rent = rent_pct_es(0.15) x Spain net (=28.5% of Spain net revenue). Per country: opex = salary_base x salary_idx + rent_base x rent_idx (indices vs Spain=1.0, from avg salary + avg rent). Tracks LOCAL operating cost, independent of the item's price.",
   "salary_pct_es": 0.135,
-  "rent_pct_es": 0.15
+  "rent_pct_es": 0.15,
+  "opex_cost_elasticity": 0.3
 }
