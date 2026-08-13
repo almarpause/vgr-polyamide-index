@@ -121,6 +121,25 @@
     h1.title{font-size:34px}
     #chart .row{grid-template-columns:120px 1fr}
   }
+
+  /* ---- compact embed mode (?embed=1): a tighter in-page fit ---- */
+  .embed-more{display:none}
+  body.embed .wrap{padding:14px 18px 26px;max-width:100%}
+  body.embed .deck{display:none}
+  body.embed h1.title{font-size:28px;margin:8px 0 4px}
+  body.embed .mast{border-top-width:3px;padding-top:10px}
+  body.embed .method,
+  body.embed #panel-tees,
+  body.embed #panel-product{display:none}
+  body.embed .kpis{margin:14px 0 4px;gap:8px}
+  body.embed .kpi .val{font-size:22px}
+  body.embed section.panel{margin-top:16px}
+  body.embed #chart .row{height:18px}
+  body.embed .plotwrap{padding:20px 12px 8px}
+  body.embed footer{margin-top:18px}
+  body.embed .embed-more{display:inline-block;margin-top:10px;font-size:12.5px;
+    font-weight:700;color:var(--red);text-decoration:none}
+  body.embed .embed-more:hover{text-decoration:underline}
 </style>
 </head>
 <body>
@@ -131,6 +150,7 @@
     <h1 class="title">%%TITLE%%</h1>
     <div class="deck">%%SUBTITLE%%</div>
     <div class="metaline" id="metaline"></div>
+    <a class="embed-more" id="embed-more" target="_blank" rel="noopener">Open the full interactive dashboard&nbsp;&#8599;</a>
   </header>
 
   <div class="method">
@@ -166,7 +186,7 @@
   </section>
 
   <!-- VALUATION + INFOGRAPHIC -->
-  <section class="panel">
+  <section class="panel" id="panel-tees">
     <div class="phead">
       <h2>How many t-shirts does %%SYM%%100 buy?</h2>
       <div class="psub">The same note stretches more than three times further in the cheapest market than the dearest — the Big&nbsp;Mac "burgers for your money" view.</div>
@@ -178,13 +198,13 @@
   <section class="panel">
     <div class="phead">
       <h2>Average by region</h2>
-      <div class="psub">Mean US$ price of the identical t-shirt across the markets in each region.</div>
+      <div class="psub">Mean price of the identical t-shirt across the markets in each region.</div>
     </div>
     <div class="pbody"><div class="regs" id="regs"></div></div>
   </section>
 
   <!-- PRODUCT -->
-  <section class="panel">
+  <section class="panel" id="panel-product">
     <div class="phead"><h2>The constant</h2>
       <div class="psub">One reference, one colour, tracked everywhere. Swappable in <code>config/settings.json</code>.</div>
     </div>
@@ -211,6 +231,15 @@ function getVar(n){return getComputedStyle(document.documentElement).getProperty
 const SYM=M.symbol||'€';
 const $=s=>document.querySelector(s), fmt=x=>SYM+x.toFixed(2),
       pct=x=>(x>0?'+':'')+x.toFixed(0)+'%';
+
+/* compact embed mode: /?embed=1 hides the long panels for a tighter in-page fit,
+   with a link out to the full standalone dashboard */
+const EMBED=/[?&]embed(=1)?\b/.test(location.search);
+if(EMBED){
+  document.body.classList.add('embed');
+  const more=$('#embed-more');
+  if(more) more.href=location.origin+location.pathname;   // same page, no ?embed
+}
 
 /* ---------- meta / product ---------- */
 $('#metaline').innerHTML =
