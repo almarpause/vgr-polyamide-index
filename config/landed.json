@@ -544,8 +544,26 @@
   "rent_pct_es": 0.15,
   "opex_cost_elasticity": 0.3,
   "franchise_markets": [
+    "ae",
+    "bh",
+    "il",
+    "jo",
+    "kw",
+    "lb",
+    "om",
+    "qa",
+    "sa",
+    "eg",
+    "ma",
+    "tn",
+    "id",
+    "my",
+    "ph",
+    "sg",
+    "th",
+    "vn",
     "co",
-    "tn"
+    "in"
   ],
-  "_franchise_notes": "Markets where Zara is run by a local FRANCHISE/partner (not owned). This list must be VERIFIED against Inditex's own disclosure or Pau's knowledge — do NOT populate from guesswork. Currently only the confirmed markets are flagged; absence of a flag means UNVERIFIED, not necessarily owned."
+  "_franchise_notes": "Franchise / local-partner markets (not Inditex-owned): margin is shared with the partner. Applied from Pau's regional guidance (Middle East, North Africa, SE Asia, Caribbean, Argentina) + Inditex disclosure (Middle East franchised; India via Trent/Tata; Venezuela franchised). Inditex publishes no clean per-country list, so VERIFY/trim — Singapore & Malaysia in particular may be company-owned. Argentina & Caribbean are franchised but not in this index's 65 markets."
 }
