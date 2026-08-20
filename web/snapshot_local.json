@@ -1,8 +1,8 @@
 {
   "reference": "3905/532/800",
   "style": "3905/532",
-  "run_date": "2026-08-10",
-  "exported_on": "2026-08-19",
+  "run_date": "2026-08-19",
+  "exported_on": "2026-08-20",
   "product": {
     "colour_name": "Black",
     "gender": "woman",
@@ -13,6 +13,21 @@
     "image_url": "https://static.zara.net/assets/public/341e/a035/ea8e428bb4c8/727e416bb9c6/03905992800-a1/03905992800-a1.jpg?ts=1772714645761&w=563"
   },
   "rows": [
+    {
+      "cc": "al",
+      "currency": "ALL",
+      "rrp": 950.0
+    },
+    {
+      "cc": "at",
+      "currency": "EUR",
+      "rrp": 8.95
+    },
+    {
+      "cc": "be",
+      "currency": "EUR",
+      "rrp": 8.95
+    },
     {
       "cc": "ba",
       "currency": "BAM",
