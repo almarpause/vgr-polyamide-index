@@ -1,8 +1,8 @@
 {
   "reference": "3905/532/800",
   "style": "3905/532",
-  "run_date": "2026-08-19",
-  "exported_on": "2026-08-23",
+  "run_date": "2026-08-24",
+  "exported_on": "2026-08-24",
   "product": {
     "colour_name": "Black",
     "gender": "woman",
@@ -59,11 +59,6 @@
       "rrp": 79.0
     },
     {
-      "cc": "ee",
-      "currency": "EUR",
-      "rrp": 9.95
-    },
-    {
       "cc": "fi",
       "currency": "EUR",
       "rrp": 8.95
@@ -105,11 +100,6 @@
     },
     {
       "cc": "lv",
-      "currency": "EUR",
-      "rrp": 9.95
-    },
-    {
-      "cc": "lt",
       "currency": "EUR",
       "rrp": 9.95
     },
@@ -192,11 +182,6 @@
       "cc": "tr",
       "currency": "TRY",
       "rrp": 520.0
-    },
-    {
-      "cc": "ua",
-      "currency": "UAH",
-      "rrp": 429.0
     },
     {
       "cc": "uk",
