@@ -1,8 +1,8 @@
 {
   "reference": "3905/532/800",
   "style": "3905/532",
-  "run_date": "2026-08-31",
-  "exported_on": "2026-09-06",
+  "run_date": "2026-09-07",
+  "exported_on": "2026-09-07",
   "product": {
     "colour_name": "Black",
     "gender": "woman",
@@ -14,6 +14,11 @@
   },
   "rows": [
     {
+      "cc": "al",
+      "currency": "ALL",
+      "rrp": 950.0
+    },
+    {
       "cc": "at",
       "currency": "EUR",
       "rrp": 8.95
@@ -22,6 +27,11 @@
       "cc": "be",
       "currency": "EUR",
       "rrp": 8.95
+    },
+    {
+      "cc": "ba",
+      "currency": "BAM",
+      "rrp": 15.5
     },
     {
       "cc": "bg",
@@ -47,6 +57,11 @@
       "cc": "dk",
       "currency": "DKK",
       "rrp": 79.0
+    },
+    {
+      "cc": "ee",
+      "currency": "EUR",
+      "rrp": 9.95
     },
     {
       "cc": "fi",
@@ -179,6 +194,11 @@
       "rrp": 520.0
     },
     {
+      "cc": "ua",
+      "currency": "UAH",
+      "rrp": 429.0
+    },
+    {
       "cc": "uk",
       "currency": "GBP",
       "rrp": 9.99
@@ -206,7 +226,7 @@
     {
       "cc": "ae",
       "currency": "AED",
-      "rrp": 59.0
+      "rrp": 49.0
     },
     {
       "cc": "sa",
@@ -279,11 +299,6 @@
       "rrp": 17900.0
     },
     {
-      "cc": "in",
-      "currency": "INR",
-      "rrp": 450.0
-    },
-    {
       "cc": "sg",
       "currency": "SGD",
       "rrp": 19.9
@@ -301,7 +316,7 @@
     {
       "cc": "th",
       "currency": "THB",
-      "rrp": 490.0
+      "rrp": 450.0
     },
     {
       "cc": "vn",
