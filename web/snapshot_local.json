@@ -1,8 +1,8 @@
 {
   "reference": "3905/532/800",
   "style": "3905/532",
-  "run_date": "2026-09-14",
-  "exported_on": "2026-09-20",
+  "run_date": "2026-09-21",
+  "exported_on": "2026-09-21",
   "product": {
     "colour_name": "Black",
     "gender": "woman",
@@ -72,11 +72,6 @@
       "cc": "de",
       "currency": "EUR",
       "rrp": 8.95
-    },
-    {
-      "cc": "gr",
-      "currency": "EUR",
-      "rrp": 7.95
     },
     {
       "cc": "hu",
@@ -174,39 +169,14 @@
       "rrp": 9.9
     },
     {
-      "cc": "tr",
-      "currency": "TRY",
-      "rrp": 520.0
-    },
-    {
-      "cc": "uk",
-      "currency": "GBP",
-      "rrp": 9.99
-    },
-    {
-      "cc": "ca",
-      "currency": "CAD",
-      "rrp": 17.9
-    },
-    {
       "cc": "us",
       "currency": "USD",
       "rrp": 14.9
     },
     {
-      "cc": "mx",
-      "currency": "MXN",
-      "rrp": 229.0
-    },
-    {
       "cc": "co",
       "currency": "COP",
       "rrp": 59900.0
-    },
-    {
-      "cc": "ae",
-      "currency": "AED",
-      "rrp": 49.0
     },
     {
       "cc": "sa",
@@ -239,11 +209,6 @@
       "rrp": 10.5
     },
     {
-      "cc": "lb",
-      "currency": "LBP",
-      "rrp": 1300000.0
-    },
-    {
       "cc": "eg",
       "currency": "EGP",
       "rrp": 650.0
@@ -264,11 +229,6 @@
       "rrp": 45.9
     },
     {
-      "cc": "cn",
-      "currency": "CNY",
-      "rrp": 89.0
-    },
-    {
       "cc": "jp",
       "currency": "JPY",
       "rrp": 1790.0
@@ -277,6 +237,11 @@
       "cc": "kr",
       "currency": "KRW",
       "rrp": 17900.0
+    },
+    {
+      "cc": "in",
+      "currency": "INR",
+      "rrp": 450.0
     },
     {
       "cc": "sg",
