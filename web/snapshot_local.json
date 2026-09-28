@@ -1,8 +1,8 @@
 {
   "reference": "3905/532/800",
   "style": "3905/532",
-  "run_date": "2026-09-21",
-  "exported_on": "2026-09-27",
+  "run_date": "2026-09-28",
+  "exported_on": "2026-09-28",
   "product": {
     "colour_name": "Black",
     "gender": "woman",
@@ -44,11 +44,6 @@
       "rrp": 7.95
     },
     {
-      "cc": "cy",
-      "currency": "EUR",
-      "rrp": 9.95
-    },
-    {
       "cc": "cz",
       "currency": "CZK",
       "rrp": 249.0
@@ -59,12 +54,12 @@
       "rrp": 79.0
     },
     {
-      "cc": "fi",
+      "cc": "ee",
       "currency": "EUR",
-      "rrp": 8.95
+      "rrp": 9.95
     },
     {
-      "cc": "fr",
+      "cc": "fi",
       "currency": "EUR",
       "rrp": 8.95
     },
@@ -79,29 +74,24 @@
       "rrp": 3595.0
     },
     {
-      "cc": "is",
-      "currency": "ISK",
-      "rrp": 1795.0
-    },
-    {
-      "cc": "ie",
-      "currency": "EUR",
-      "rrp": 8.95
-    },
-    {
       "cc": "it",
       "currency": "EUR",
       "rrp": 8.95
     },
     {
+      "cc": "lv",
+      "currency": "EUR",
+      "rrp": 9.95
+    },
+    {
+      "cc": "lt",
+      "currency": "EUR",
+      "rrp": 9.95
+    },
+    {
       "cc": "lu",
       "currency": "EUR",
       "rrp": 8.95
-    },
-    {
-      "cc": "mt",
-      "currency": "EUR",
-      "rrp": 9.95
     },
     {
       "cc": "me",
@@ -169,9 +159,24 @@
       "rrp": 9.9
     },
     {
+      "cc": "uk",
+      "currency": "GBP",
+      "rrp": 9.99
+    },
+    {
+      "cc": "ca",
+      "currency": "CAD",
+      "rrp": 17.9
+    },
+    {
       "cc": "us",
       "currency": "USD",
       "rrp": 14.9
+    },
+    {
+      "cc": "mx",
+      "currency": "MXN",
+      "rrp": 229.0
     },
     {
       "cc": "co",
@@ -229,6 +234,11 @@
       "rrp": 45.9
     },
     {
+      "cc": "cn",
+      "currency": "CNY",
+      "rrp": 89.0
+    },
+    {
       "cc": "jp",
       "currency": "JPY",
       "rrp": 1790.0
@@ -237,11 +247,6 @@
       "cc": "kr",
       "currency": "KRW",
       "rrp": 17900.0
-    },
-    {
-      "cc": "in",
-      "currency": "INR",
-      "rrp": 450.0
     },
     {
       "cc": "sg",
@@ -282,11 +287,6 @@
       "cc": "mo",
       "currency": "MOP",
       "rrp": 99.0
-    },
-    {
-      "cc": "kz",
-      "currency": "KZT",
-      "rrp": 5590.0
     }
   ]
 }
