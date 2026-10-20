@@ -1,8 +1,8 @@
 {
   "reference": "3905/532/800",
   "style": "3905/532",
-  "run_date": "2026-10-12",
-  "exported_on": "2026-10-19",
+  "run_date": "2026-10-19",
+  "exported_on": "2026-10-20",
   "product": {
     "colour_name": "Black",
     "gender": "woman",
@@ -14,119 +14,34 @@
   },
   "rows": [
     {
-      "cc": "al",
-      "currency": "ALL",
-      "rrp": 950.0
-    },
-    {
-      "cc": "at",
-      "currency": "EUR",
-      "rrp": 8.95
-    },
-    {
-      "cc": "be",
-      "currency": "EUR",
-      "rrp": 8.95
-    },
-    {
-      "cc": "ba",
-      "currency": "BAM",
-      "rrp": 15.5
-    },
-    {
-      "cc": "bg",
-      "currency": "BGN",
-      "rrp": 7.95
-    },
-    {
-      "cc": "hr",
+      "cc": "gr",
       "currency": "EUR",
       "rrp": 7.95
     },
     {
-      "cc": "cz",
-      "currency": "CZK",
-      "rrp": 249.0
-    },
-    {
-      "cc": "dk",
-      "currency": "DKK",
-      "rrp": 79.0
-    },
-    {
-      "cc": "ee",
-      "currency": "EUR",
-      "rrp": 9.95
-    },
-    {
-      "cc": "fi",
+      "cc": "ie",
       "currency": "EUR",
       "rrp": 8.95
     },
     {
-      "cc": "fr",
-      "currency": "EUR",
-      "rrp": 8.95
-    },
-    {
-      "cc": "de",
-      "currency": "EUR",
-      "rrp": 8.95
-    },
-    {
-      "cc": "hu",
-      "currency": "HUF",
-      "rrp": 3595.0
-    },
-    {
-      "cc": "it",
-      "currency": "EUR",
-      "rrp": 8.95
-    },
-    {
-      "cc": "lv",
-      "currency": "EUR",
-      "rrp": 9.95
-    },
-    {
-      "cc": "lt",
-      "currency": "EUR",
-      "rrp": 9.95
-    },
-    {
-      "cc": "lu",
-      "currency": "EUR",
-      "rrp": 8.95
-    },
-    {
-      "cc": "me",
+      "cc": "pt",
       "currency": "EUR",
       "rrp": 7.95
     },
     {
-      "cc": "nl",
+      "cc": "es",
       "currency": "EUR",
-      "rrp": 8.95
+      "rrp": 7.95
     },
     {
-      "cc": "mk",
-      "currency": "MKD",
-      "rrp": 490.0
-    },
-    {
-      "cc": "no",
-      "currency": "NOK",
-      "rrp": 129.0
+      "cc": "ch",
+      "currency": "CHF",
+      "rrp": 9.9
     },
     {
       "cc": "uk",
       "currency": "GBP",
       "rrp": 9.99
-    },
-    {
-      "cc": "ca",
-      "currency": "CAD",
-      "rrp": 17.9
     },
     {
       "cc": "us",
@@ -144,9 +59,29 @@
       "rrp": 49.0
     },
     {
+      "cc": "sa",
+      "currency": "SAR",
+      "rrp": 59.0
+    },
+    {
+      "cc": "qa",
+      "currency": "QAR",
+      "rrp": 49.0
+    },
+    {
       "cc": "kw",
       "currency": "KWD",
       "rrp": 4.5
+    },
+    {
+      "cc": "bh",
+      "currency": "BHD",
+      "rrp": 5.5
+    },
+    {
+      "cc": "om",
+      "currency": "OMR",
+      "rrp": 5.9
     },
     {
       "cc": "jo",
@@ -162,6 +97,11 @@
       "cc": "il",
       "currency": "ILS",
       "rrp": 49.9
+    },
+    {
+      "cc": "ma",
+      "currency": "MAD",
+      "rrp": 129.0
     },
     {
       "cc": "tn",
@@ -222,6 +162,11 @@
       "cc": "mo",
       "currency": "MOP",
       "rrp": 99.0
+    },
+    {
+      "cc": "kz",
+      "currency": "KZT",
+      "rrp": 5590.0
     }
   ]
 }
