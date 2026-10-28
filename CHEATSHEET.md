@@ -74,8 +74,9 @@ After changing `reference`, just re-run `python run_monthly.py --dry-run` to pre
 ## Files
 | Path | Purpose |
 |------|---------|
-| `common.py` | paths, config, country metadata (name/region/flag/symbol), live USD FX |
-| `build_index.py` | DB → USD → `data.json` |
+| `common.py` | paths, config, country metadata (name/region/flag/symbol), live spot FX |
+| `build_index.py` | DB (or `web/snapshot_local.json` with `--from-snapshot`) → RRP in euros → `data.json` |
+| `export_snapshot.py` | DB → `web/snapshot_local.json` (RRP per market) for the cloud build |
 | `build_dashboard.py` + `dashboard_template.html` | `data.json` → `dashboard.html` |
 | `email_report.py` | send summary + attach dashboard |
 | `run_monthly.py` | orchestrator (1→2→3) |

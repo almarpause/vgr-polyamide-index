@@ -3,7 +3,12 @@
 A **Big Mac Index for one identical Zara garment.** The Economist prices one identical
 burger across countries to expose what local economies do to a fixed product. This does the
 same with one physical item — Zara's **FINE STRAP POLYAMIDE T-SHIRT** (reference
-`3905/532/800`, colour *Black*) — sold in ~65 countries.
+`3905/532/800`, colour *Black*), sold in many countries.
+
+**Which markets are included.** Every market where the item is in stock with a listed
+price on the snapshot date, and whose currency has a live FX rate. The count changes
+from run to run: 65 on 10 Aug 2026, 68 on 19 Aug, 62 on 14 Sep and 31 on 19 Oct 2026
+(the latest committed snapshot, `web/snapshot_local.json`). See `history/monthly.csv`.
 
 Every market is priced in **one currency — euros — at live market (spot) rates**, and
 **anchored to Spain** (Zara's home market, whose €7.95 is the 0% baseline). Because the product
@@ -20,7 +25,7 @@ That is the story the dashboard and the monthly email tell.
 
 - **`output/<run_date>/dashboard.html`** — a single, self-contained interactive dashboard in
   The Economist's chart grammar (Econ-Red accent, navy/blue data palette, Georgia + Arial).
-  Opens by double-click, no server, no internet. Ranked bar chart of all markets in USD,
+  Opens by double-click, no server, no internet. Ranked bar chart of all markets in euros,
   sortable by *€ price / vs Spain / vs USA*, filterable by region; a "how many t-shirts does
   €100 buy?" infographic; regional averages; the product card.
 - **`output/<run_date>/data.json`** (+ `output/latest.json`) — the computed dataset.
@@ -39,7 +44,7 @@ at live market (spot) rates** (`open.er-api.com`, free, no key — *not* the par
 
 ```
 Parser Zara (weekly)            Polyamide Index (monthly, 20th)
-  master.sqlite  ──────────►  build_index.py   → data.json     (DB + live USD FX)
+  master.sqlite  ──────────►  build_index.py   → data.json     (DB + live spot FX, EUR)
                               build_dashboard.py → dashboard.html
                               email_report.py   → emails summary + attaches dashboard
                               run_monthly.py     = the three, chained, with logging
@@ -54,7 +59,7 @@ never hammers Zara.
 
 | Step | Script | Does |
 |------|--------|------|
-| 1 | `build_index.py` | Latest Zara snapshot for the reference → USD via live FX → `data.json` |
+| 1 | `build_index.py` | Latest Zara snapshot for the reference → euros via live FX → `data.json` |
 | 2 | `build_dashboard.py` | `data.json` → self-contained `dashboard.html` (Economist style) |
 | 3 | `email_report.py` | Emails the HTML summary + attaches `dashboard.html` |
 | — | `run_monthly.py` | Runs 1→2→3 with a shared run and a monthly log |
@@ -77,7 +82,7 @@ See **CHEATSHEET.md** for every command and flag.
   "display_currency": "EUR",       // convert every market to this currency (spot rates)
   "base_country": "es",            // the anchor / 0% line in the "vs" views (Spain)
   "ref_country": "us",             // a secondary comparison shown alongside (USA)
-  "recipients": ["pau.almar@verygoodretail.com"],
+  "recipients": ["pau.almar@verygoodretail.ai"],
   "zara_db": "../parser/russia/zara/layer3_consolidator/database/master.sqlite",
   "zara_email_ini": "../parser/russia/zara/config/email.ini"
 }
@@ -114,12 +119,24 @@ scraper runs weekly on Mondays), so the 20th always sees fresh data.
 
 ## Notes & caveats
 
-- Prices are **recommended retail (RRP)**; on-sale prices are used when present. RRP is
-  **VAT-inclusive where local law includes it** (e.g. EU), which is part of the story — VAT is
-  one of the cost layers the index surfaces.
+- Prices are the **list price (RRP)** only. `build_index.py` reads the `rrp` column and
+  ignores `discounted_price`, even when the item is on sale. A row still carries an
+  `on_sale` flag so a discount is visible, but it never changes the value. The cloud
+  snapshot (`web/snapshot_local.json`) stores only the RRP.
+- RRP is VAT-inclusive where local law includes it (e.g. EU). VAT is one of the cost
+  layers the index shows.
 - Conversion uses **market spot** exchange rates pulled live on the run's FX date (shown in the
   footer), not PPP and not any fixed/stored rate. `--offline` reuses the last live pull.
 - Change `display_currency` / `base_country` in `config/settings.json` to re-anchor (e.g. back to
   `USD` / `us`); every label, symbol and comparison follows automatically.
 - A market is included only if it has an in-stock price for the reference on the snapshot date
-  and a currency with a live FX rate (any skipped market is listed in the run log).
+  and a currency with a live FX rate (any skipped market is listed in the run log). So the
+  number of markets is not fixed.
+
+## Web feed (GitHub Pages)
+
+`.github/workflows/refresh-polyamide.yml` runs daily at 06:00 UTC and on every push to
+`main`. It runs `build_index.py --from-snapshot` (prices from the committed
+`web/snapshot_local.json`, FX fetched live) and `build_dashboard.py`, then publishes
+`index.html`, `polyamide_data.json` and the monthly posts in `web/posts/`. Prices change only
+when a new snapshot is pushed. FX changes on every run. See **WEB_DEPLOY.md**.

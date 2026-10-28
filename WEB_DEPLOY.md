@@ -1,6 +1,6 @@
 # Putting the Zara Polyamide Index on the VGR site (auto-updating daily)
 
-Same model as the **VGR 50 Index**: a free **GitHub Action** rebuilds the dashboard
+Same model as the **VGR 40 index**: a free **GitHub Action** rebuilds the dashboard
 in the cloud and publishes it to **GitHub Pages**, and your Lovable site shows it.
 No computer of yours needs to be on for the daily refresh.
 
@@ -13,7 +13,14 @@ https://<user>.github.io/<repo>/polyamide_data.json  <- the data feed (CORS-open
 scrapes on Mondays), so they travel in a small committed file, `web/snapshot_local.json`.
 The *FX* changes every day, and the cloud Action fetches **live spot rates** on each
 run — so the euro-denominated index (and the ranking) refreshes **daily**, exactly
-like the Fashion 50. Prices are the list price / **RRP** (current discounts ignored).
+like the VGR 40. Prices are the list price / **RRP** (current discounts ignored).
+`export_snapshot.py` writes only the RRP into the snapshot, and `build_index.py` never
+uses the discounted price.
+
+**Which markets.** Every market where the item is in stock with a listed price on the
+snapshot date and whose currency has a live FX rate. The count changes: 65 (10 Aug 2026),
+68 (19 Aug), 62 (14 Sep), 31 (19 Oct 2026, the snapshot committed now). Read
+`meta.n_countries` from the feed instead of hard-coding a number.
 
 ---
 
@@ -29,7 +36,7 @@ git branch -M main
 git push -u origin main
 ```
 
-(Your GitHub credentials are already cached from the Fashion 50 repo, so the push
+(Your GitHub credentials are already cached from the VGR 40 repo, so the push
 should just work.)
 
 ## Step 2 — turn on Pages + let the Action run
@@ -79,8 +86,8 @@ published version; nothing else to maintain:
 </iframe>
 ```
 
-`?embed=1` serves a **compact** layout (condensed header, KPIs, the 65-market ranked
-chart, region averages, and a link out to the full dashboard) — ~2020px, a tighter
+`?embed=1` serves a **compact** layout (condensed header, KPIs, the ranked chart of
+every market in the current snapshot, region averages, and a link out to the full dashboard), about 2020px, a tighter
 in-page fit. Drop `?embed=1` for the full standalone dashboard (~3300px). This is the
 exact embed used on the VGR site's Intelligence → Zara Polyamide Index page.
 
