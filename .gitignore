@@ -11,3 +11,6 @@ _run.js
 
 # local Claude Code config
 .claude/
+
+# local research scratch output (not code)
+trends_out/
