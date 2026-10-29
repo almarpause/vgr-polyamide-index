@@ -109,7 +109,7 @@ def render(data: dict) -> tuple[str, str, str]:
     anchored to {base} ({s}{m['base_value']:.2f}).
   </div>
   <div style="font:12px Arial;color:#777;margin-bottom:14px">
-    Reference {m['reference']} · {m['colour_name']} · snapshot {m['run_date']} · spot FX {m['fx_asof']}
+    Reference {m['reference']} · {m['colour_name']} · snapshot {m['run_date']} · spot FX {m['fx_asof']}{(' · ' + base + ' not listed this week: its ' + m['base_carried_from'] + ' price is carried forward') if m.get('base_carried_from') else ''}
   </div>
 
   <div style="background:#fff;border:1px solid #e2ddd2;border-left:3px solid #E3120B;padding:12px 14px;font:13px Arial;color:#333;margin-bottom:16px">
@@ -150,7 +150,8 @@ def render(data: dict) -> tuple[str, str, str]:
     # plain-text fallback
     tl = [f"ZARA POLYAMIDE INDEX — {m['run_date']}",
           f"One identical Zara t-shirt ({m['reference']}, {m['colour_name']}) priced in {m['n_countries']} countries, in {m['currency']}.",
-          f"Anchor: {base} = {s}{m['base_value']:.2f} (the 0% line).",
+          f"Anchor: {base} = {s}{m['base_value']:.2f} (the 0% line)"
+          + (f", carried forward from {m['base_carried_from']} (not listed this week)." if m.get('base_carried_from') else "."),
           "", f"World avg {s}{m['avg']:.2f} · median {s}{m['median']:.2f} · "
               f"cheapest {m['cheapest']['name']} {s}{m['cheapest']['value']:.2f} · "
               f"dearest {m['dearest']['name']} {s}{m['dearest']['value']:.2f} · "

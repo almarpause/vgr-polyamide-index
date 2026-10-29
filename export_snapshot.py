@@ -46,6 +46,7 @@ def main(argv=None) -> int:
         raise SystemExit(f"[export] no in-stock snapshots for {ref!r}")
     meta = build_index.product_meta(cur, ref)
     snaps = build_index.snapshots(cur, ref, run_date)   # already RRP-based
+    snaps, _ = build_index.add_anchor_fallback(cur, ref, run_date, snaps, cfg.get("base_country", "es"))
     con.close()
 
     payload = {
@@ -55,7 +56,8 @@ def main(argv=None) -> int:
         "exported_on": date.today().isoformat(),
         "product": {k: meta[k] for k in
                     ("colour_name", "gender", "family", "subfamily", "season", "name", "image_url")},
-        "rows": [{"cc": s["cc"], "currency": s["currency"], "rrp": s["price_local"]} for s in snaps],
+        "rows": [{"cc": s["cc"], "currency": s["currency"], "rrp": s["price_local"],
+                  **({"carried_from": s["carried_from"]} if s.get("carried_from") else {})} for s in snaps],
     }
     WEB_DIR.mkdir(exist_ok=True)
     SNAPSHOT.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")

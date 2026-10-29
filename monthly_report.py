@@ -122,7 +122,8 @@ def build(data: dict, d: dict) -> str:
     en.cover_masthead(doc, "VGR INDEX")
     en.h1(doc, "The Zara Polyamide Index", deck=f"One t-shirt, {m['n_countries']} markets — {month_label(d['cur_date'])}")
     en.source_line(doc, f"Made in Turkey · HS 6109.90 · anchored to Spain {money(m['base_value'])} · "
-                        f"snapshot {m['run_date']} · spot FX {m['fx_asof']}")
+                        f"snapshot {m['run_date']} · spot FX {m['fx_asof']}"
+                        + (f" · Spain price carried forward from {m['base_carried_from']}" if m.get('base_carried_from') else ""))
     en.stripe_band(doc)
 
     w = d["winner"]

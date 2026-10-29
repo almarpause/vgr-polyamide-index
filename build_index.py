@@ -106,7 +106,8 @@ def load_from_snapshot(run_date_override: str | None) -> tuple[str, dict, list[d
     s = json.loads(SNAPSHOT.read_text(encoding="utf-8"))
     meta = {"reference": s["reference"], "style": s["style"], **s.get("product", {})}
     snaps = [{"cc": r["cc"], "currency": r["currency"], "rrp_local": r["rrp"],
-              "price_local": r["rrp"], "on_sale": False} for r in s["rows"]]
+              "price_local": r["rrp"], "on_sale": False,
+              "carried_from": r.get("carried_from")} for r in s["rows"]]
     return run_date_override or s["run_date"], meta, snaps
 
 
@@ -140,6 +141,29 @@ def snapshots(cur: sqlite3.Cursor, ref: str, run_date: str) -> list[dict]:
         out.append({"cc": cc, "currency": ccy, "rrp_local": rrp,
                     "price_local": price, "on_sale": bool(disc)})
     return out
+
+
+def add_anchor_fallback(cur: sqlite3.Cursor, ref: str, run_date: str, snaps: list[dict],
+                        anchor_cc: str) -> tuple[list[dict], str | None]:
+    """If the anchor market (Spain) did not list the item in this run, carry its
+    price forward from the latest earlier run that did, so the index still has
+    its 0% line. The row is marked with `carried_from` and reported as such.
+    Returns (snaps, carried_from_date or None)."""
+    if any(s["cc"] == anchor_cc for s in snaps):
+        return snaps, None
+    cur.execute(
+        "SELECT run_date, currency, rrp FROM price_snapshots WHERE reference=? AND country=? "
+        "AND in_stock=1 AND rrp > 0 AND run_date < ? ORDER BY run_date DESC LIMIT 1",
+        (ref, anchor_cc, run_date))
+    row = cur.fetchone()
+    if not row:
+        return snaps, None
+    prev_date, ccy, rrp = row
+    print(f"[index] anchor {anchor_cc.upper()} not listed on {run_date}; "
+          f"carrying forward its {prev_date} price {rrp} {ccy}")
+    snaps = snaps + [{"cc": anchor_cc, "currency": ccy, "rrp_local": rrp, "price_local": rrp,
+                      "on_sale": False, "carried_from": prev_date}]
+    return snaps, prev_date
 
 
 def load_fx(base: str, offline: bool) -> tuple[dict, str]:
@@ -182,6 +206,8 @@ def main(argv=None) -> int:
     if use_snapshot:
         run_date, meta, snaps = load_from_snapshot(a.run_date)
         print(f"[index] source: web/snapshot_local.json (cloud mode)")
+        anchor_carried = next((x.get("carried_from") for x in snaps
+                               if x["cc"] == base_cc and x.get("carried_from")), None)
     else:
         con = sqlite3.connect(f"file:{db}?mode=ro", uri=True)
         cur = con.cursor()
@@ -190,6 +216,7 @@ def main(argv=None) -> int:
             raise SystemExit(f"[index] no in-stock snapshots for {ref!r} in {db}")
         meta = product_meta(cur, ref)
         snaps = snapshots(cur, ref, run_date)
+        snaps, anchor_carried = add_anchor_fallback(cur, ref, run_date, snaps, base_cc)
         con.close()
     if not snaps:
         raise SystemExit(f"[index] no priced rows for {ref!r} on {run_date}")
@@ -256,6 +283,7 @@ def main(argv=None) -> int:
         "zara_search_term": search_term,
         "currency": ccy_disp, "symbol": symbol,
         "base_country": base_cc, "base_name": common.country_name(base_cc), "base_value": base_val,
+        "base_carried_from": anchor_carried,
         "ref_country": ref_cc, "ref_name": common.country_name(ref_cc), "ref_value": ref_val,
         "n_countries": len(countries),
         "min": round(min(vals), 2), "max": round(max(vals), 2),
