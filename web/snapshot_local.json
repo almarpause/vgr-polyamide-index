@@ -1,8 +1,8 @@
 {
   "reference": "3905/532/800",
   "style": "3905/532",
-  "run_date": "2026-10-19",
-  "exported_on": "2026-10-26",
+  "run_date": "2026-11-02",
+  "exported_on": "2026-11-02",
   "product": {
     "colour_name": "Black",
     "gender": "woman",
@@ -14,34 +14,74 @@
   },
   "rows": [
     {
-      "cc": "gr",
-      "currency": "EUR",
-      "rrp": 7.95
+      "cc": "al",
+      "currency": "ALL",
+      "rrp": 950.0
     },
     {
-      "cc": "ie",
+      "cc": "at",
       "currency": "EUR",
       "rrp": 8.95
     },
     {
-      "cc": "pt",
+      "cc": "be",
+      "currency": "EUR",
+      "rrp": 8.95
+    },
+    {
+      "cc": "ba",
+      "currency": "BAM",
+      "rrp": 15.5
+    },
+    {
+      "cc": "bg",
+      "currency": "BGN",
+      "rrp": 7.95
+    },
+    {
+      "cc": "hr",
       "currency": "EUR",
       "rrp": 7.95
     },
     {
-      "cc": "es",
+      "cc": "cz",
+      "currency": "CZK",
+      "rrp": 249.0
+    },
+    {
+      "cc": "dk",
+      "currency": "DKK",
+      "rrp": 79.0
+    },
+    {
+      "cc": "ee",
       "currency": "EUR",
-      "rrp": 7.95
+      "rrp": 9.95
     },
     {
-      "cc": "ch",
-      "currency": "CHF",
-      "rrp": 9.9
+      "cc": "fi",
+      "currency": "EUR",
+      "rrp": 8.95
     },
     {
-      "cc": "uk",
-      "currency": "GBP",
-      "rrp": 9.99
+      "cc": "fr",
+      "currency": "EUR",
+      "rrp": 8.95
+    },
+    {
+      "cc": "de",
+      "currency": "EUR",
+      "rrp": 8.95
+    },
+    {
+      "cc": "hu",
+      "currency": "HUF",
+      "rrp": 3595.0
+    },
+    {
+      "cc": "lt",
+      "currency": "EUR",
+      "rrp": 9.95
     },
     {
       "cc": "us",
@@ -59,29 +99,9 @@
       "rrp": 49.0
     },
     {
-      "cc": "sa",
-      "currency": "SAR",
-      "rrp": 59.0
-    },
-    {
-      "cc": "qa",
-      "currency": "QAR",
-      "rrp": 49.0
-    },
-    {
       "cc": "kw",
       "currency": "KWD",
       "rrp": 4.5
-    },
-    {
-      "cc": "bh",
-      "currency": "BHD",
-      "rrp": 5.5
-    },
-    {
-      "cc": "om",
-      "currency": "OMR",
-      "rrp": 5.9
     },
     {
       "cc": "jo",
@@ -97,11 +117,6 @@
       "cc": "il",
       "currency": "ILS",
       "rrp": 49.9
-    },
-    {
-      "cc": "ma",
-      "currency": "MAD",
-      "rrp": 129.0
     },
     {
       "cc": "tn",
@@ -122,6 +137,11 @@
       "cc": "kr",
       "currency": "KRW",
       "rrp": 17900.0
+    },
+    {
+      "cc": "in",
+      "currency": "INR",
+      "rrp": 450.0
     },
     {
       "cc": "sg",
@@ -164,9 +184,10 @@
       "rrp": 99.0
     },
     {
-      "cc": "kz",
-      "currency": "KZT",
-      "rrp": 5590.0
+      "cc": "es",
+      "currency": "EUR",
+      "rrp": 7.95,
+      "carried_from": "2026-10-19"
     }
   ]
 }
