@@ -17,12 +17,12 @@ from __future__ import annotations
 
 import argparse
 import json
-import sqlite3
 from datetime import date
 from pathlib import Path
 
 import build_index
 import common
+import vgr_pg
 
 WEB_DIR = common.ROOT / "web"
 SNAPSHOT = WEB_DIR / "snapshot_local.json"
@@ -36,10 +36,10 @@ def main(argv=None) -> int:
     cfg = common.load_settings()
     ref = cfg["reference"]
     db = Path(cfg["zara_db"])
-    if not db.exists():
+    if not vgr_pg.available(db):
         raise SystemExit(f"[export] Zara DB not found: {db} (run this on the machine with the parser)")
 
-    con = sqlite3.connect(f"file:{db}?mode=ro", uri=True)
+    con = vgr_pg.connect_path(db, readonly=True, role=build_index.ZARA_ROLE)
     cur = con.cursor()
     run_date = a.run_date or build_index.latest_run_with_ref(cur, ref)
     if not run_date:

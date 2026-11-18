@@ -1,4 +1,4 @@
-"""Polyamide Index — Layer 1: build the dataset.
+﻿"""Polyamide Index — Layer 1: build the dataset.
 
 Reads the latest Zara snapshot for the tracked reference from the parser's
 master.sqlite, converts every local price to the display currency at live market
@@ -22,6 +22,9 @@ from pathlib import Path
 from urllib.parse import quote
 
 import common
+import vgr_pg   # Zara history: master.sqlite, or Postgres schema zara (read-only role polyamide_rw)
+
+ZARA_ROLE = "polyamide_rw"
 
 FX_CACHE = common.CONFIG_DIR / "fx_cache.json"
 SNAPSHOT = common.ROOT / "web" / "snapshot_local.json"
@@ -129,7 +132,7 @@ def product_meta(cur: sqlite3.Cursor, ref: str) -> dict:
 def snapshots(cur: sqlite3.Cursor, ref: str, run_date: str) -> list[dict]:
     cur.execute(
         "SELECT country, currency, rrp, discounted_price, in_stock "
-        "FROM price_snapshots WHERE reference=? AND run_date=? AND in_stock=1",
+        "FROM price_snapshots WHERE reference=? AND run_date=? AND in_stock=1 ORDER BY id",
         (ref, run_date))
     out = []
     for cc, ccy, rrp, disc, in_stock in cur.fetchall():
@@ -202,14 +205,14 @@ def main(argv=None) -> int:
     symbol = common.currency_symbol(ccy_disp)
 
     db = Path(cfg["zara_db"])
-    use_snapshot = a.from_snapshot or not db.exists()
+    use_snapshot = a.from_snapshot or not vgr_pg.available(db)
     if use_snapshot:
         run_date, meta, snaps = load_from_snapshot(a.run_date)
         print(f"[index] source: web/snapshot_local.json (cloud mode)")
         anchor_carried = next((x.get("carried_from") for x in snaps
                                if x["cc"] == base_cc and x.get("carried_from")), None)
     else:
-        con = sqlite3.connect(f"file:{db}?mode=ro", uri=True)
+        con = vgr_pg.connect_path(db, readonly=True, role=ZARA_ROLE)
         cur = con.cursor()
         run_date = a.run_date or latest_run_with_ref(cur, ref)
         if not run_date:
@@ -318,3 +321,4 @@ def main(argv=None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
