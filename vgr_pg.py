@@ -56,6 +56,12 @@ MARKER = "MIGRATED_TO_POSTGRES.txt"
 # dev run has no marker), and SQLite there is refused unless a sandbox/test sets
 # VGR_PG_ALLOW_SQLITE=1 together with VGR_DB=sqlite.
 DEFAULT_DSN = "host=100.77.195.48 port=5432 dbname=vgr"
+# schema -> project folders allowed above <tool>/<folder>/<file> (other brand
+# parsers share the layout and must never land in these schemas)
+REPO_NAMES = {
+    "closet": {"closet-competitors", "competitors"},
+    "zara": {"zara-parser", "zara"},
+}
 
 
 def _sqlite_allowed() -> bool:
@@ -83,6 +89,9 @@ def schema_for(path: str | Path) -> str | None:
     app = APPS.get(p.parent.parent.name.lower())
     folder = app[2] if app and len(app) > 2 else "data"
     if app and p.parent.name.lower() == folder and p.name.lower() == app[1]:
+        repos = REPO_NAMES.get(app[0])
+        if repos and p.parent.parent.parent.name.lower() not in repos:
+            return None  # same layout, another project (e.g. another brand parser)
         return app[0]
     return None
 
