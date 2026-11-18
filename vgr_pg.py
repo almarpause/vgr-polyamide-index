@@ -51,6 +51,25 @@ APPS = {
 }
 MARKER = "MIGRATED_TO_POSTGRES.txt"
 
+# PG_ONLY_PATCH (2026-11-18): every app in APPS has been cut over to node01.
+# Its production path always means PostgreSQL, marker or not (a fresh clone or a
+# dev run has no marker), and SQLite there is refused unless a sandbox/test sets
+# VGR_PG_ALLOW_SQLITE=1 together with VGR_DB=sqlite.
+DEFAULT_DSN = "host=100.77.195.48 port=5432 dbname=vgr"
+
+
+def _sqlite_allowed() -> bool:
+    return os.environ.get("VGR_PG_ALLOW_SQLITE") == "1"
+
+
+def _default_dsn() -> str:
+    """node01 over Tailscale; the password comes from the machine's passfile."""
+    dsn = DEFAULT_DSN
+    home_pgpass = Path.home() / ".pgpass"
+    if os.name == "nt" and not os.environ.get("PGPASSFILE") and home_pgpass.is_file():
+        dsn += " passfile=" + home_pgpass.as_posix()  # minipc01 keeps it in ~/.pgpass
+    return dsn
+
 # Exceptions a caller may catch for "the database failed", whichever backend.
 ERRORS: tuple = (sqlite3.Error,) + ((psycopg.Error,) if psycopg else ())
 
@@ -87,7 +106,7 @@ def _marker_dsn(path) -> str | None:
 def backend_for(schema: str, path: str | Path | None = None) -> str:
     value = os.environ.get("VGR_DB_" + schema.upper()) or os.environ.get("VGR_DB")
     if not value:
-        value = "postgres" if _marker(path) else "sqlite"
+        value = "postgres"  # migrated app: node01 by default (PG_ONLY_PATCH)
     value = value.strip().lower()
     if value not in ("sqlite", "postgres"):
         raise ValueError(f"VGR_DB must be sqlite or postgres, got {value!r}")
@@ -102,10 +121,11 @@ def uses_postgres(path: str | Path) -> bool:
 def guard_sqlite(path: str | Path) -> None:
     """Refuse to open a retired production SQLite DB."""
     p = Path(path)
-    if schema_for(p) and (p.parent / MARKER).exists():
+    if schema_for(p) and not _sqlite_allowed():
         raise RuntimeError(
             f"{p} was migrated to PostgreSQL (see {p.parent / MARKER}). "
-            "Set VGR_DB=postgres; the SQLite file is retired."
+            "It is PostgreSQL-only (node01): unset VGR_DB or set VGR_DB=postgres. "
+            "Sandboxes/tests on their own copy: VGR_DB=sqlite VGR_PG_ALLOW_SQLITE=1."
         )
 
 
@@ -410,7 +430,7 @@ def connect_pg(schema: str, readonly: bool = False, dsn: str | None = None,
     (Polyamide reading zara) passes its own role, e.g. ``polyamide_rw``."""
     if psycopg is None:
         raise RuntimeError("VGR_DB=postgres needs psycopg: pip install 'psycopg[binary]'")
-    dsn = os.environ.get("VGR_PG_DSN") or dsn
+    dsn = os.environ.get("VGR_PG_DSN") or dsn or _default_dsn()
     if not dsn:
         raise RuntimeError("VGR_DB=postgres but VGR_PG_DSN is not set")
     options = f"-c search_path={schema} -c TimeZone=UTC"
